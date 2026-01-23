@@ -1,1 +1,82 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Angular Material baseline typography */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* 🐾 Cursor customizado patinha de gato */
+* {
+  cursor:
+    url("assets/cursors/paw-default.png") 12 12,
+    auto !important;
+}
+
+/* Cursor pointer para elementos clicáveis */
+a,
+button,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-icon-button,
+.mat-mdc-fab,
+.mat-mdc-mini-fab,
+.mat-mdc-chip,
+.mat-mdc-tab,
+.clickable,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+select {
+  cursor:
+    url("assets/cursors/paw-pointer.png") 24 24,
+    pointer !important;
+}
+
+/* SCSS (somente quando Tailwind não cobre bem):
+   pequenos ajustes para Material em telas muito pequenas */
+.mat-mdc-dialog-container {
+  max-width: 96vw;
+}
+
+// Snackbar Colors
+.snackbar-success {
+  .mdc-snackbar__surface {
+    background-color: #10b981 !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .mdc-snackbar__label {
+    color: white !important;
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+  }
+}
+
+.snackbar-error {
+  .mdc-snackbar__surface {
+    background-color: #ef4444 !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .mdc-snackbar__label {
+    color: white !important;
+  }
+
+  .mat-mdc-button {
+    color: white !important;
+  }
+}
