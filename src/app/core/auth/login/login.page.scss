@@ -1,0 +1,67 @@
+// Bird flying animation
+.bird-container {
+  position: absolute;
+  top: 25%;
+  right: 20%;
+  animation: flyBird 15s ease-in-out infinite;
+}
+
+@keyframes flyBird {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-400px) translateY(-50px);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+.bird {
+  animation: flapWings 0.5s ease-in-out infinite;
+}
+
+@keyframes flapWings {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.7);
+  }
+}
+
+// Silhouettes container
+.silhouettes-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+}
+
+// Project info
+.project-info {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  z-index: 10;
+}
+
+// Prevent page overflow
+:host {
+  display: block;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
