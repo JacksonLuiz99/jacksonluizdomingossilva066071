@@ -1,0 +1,48 @@
+<div
+  class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-0 overflow-hidden"
+>
+  <!-- Header -->
+  <div class="px-6 py-5 border-b border-gray-200">
+    <div class="flex items-center gap-3">
+      <div
+        [class]="
+          data.isDanger
+            ? 'w-12 h-12 rounded-full bg-red-100 flex items-center justify-center'
+            : 'w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center'
+        "
+      >
+        <mat-icon [class]="data.isDanger ? 'text-red-600' : 'text-blue-600'">
+          {{ data.isDanger ? "warning" : "help_outline" }}
+        </mat-icon>
+      </div>
+      <h2 class="text-xl font-bold text-gray-900">{{ data.title }}</h2>
+    </div>
+  </div>
+
+  <!-- content -->
+  <div class="px-6 py-5">
+    <p class="text-gray-700 leading-relaxed">{{ data.message }}</p>
+  </div>
+
+  <!-- Actions -->
+  <div class="px-6 py-4 bg-gray-50 flex gap-3 justify-end">
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="px-6 py-2.5 rounded-full font-semibold text-gray-700 bg-white border-2 border-gray-300 hover:bg-gray-100 hover:border-gray-400 transition-all duration-200"
+    >
+      {{ data.cancelText }}
+    </button>
+    <button
+      type="button"
+      (click)="onConfirm()"
+      [class]="
+        data.isDanger
+          ? 'px-6 py-2.5 rounded-full font-semibold text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200'
+          : 'px-6 py-2.5 rounded-full font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200'
+      "
+    >
+      {{ data.confirmText }}
+    </button>
+  </div>
+</div>
