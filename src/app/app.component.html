@@ -1,1 +1,31 @@
-<router-outlet />
+<div
+  class="min-h-screen bg-gradient-to-b from-sky-300 via-teal-200 to-green-200 relative"
+>
+  <!-- nuvens decorativas -->
+  <div class="clouds cloud-1"></div>
+  <div class="clouds cloud-2"></div>
+
+  <!-- Header -->
+  @if (isLoggedIn) {
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
+      <div
+        class="container mx-auto px-4 py-3 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-6">
+          <h1 class="text-2xl font-black text-orange-500">🐾 PetPals</h1>
+        </div>
+        <button
+          (click)="logout()"
+          class="px-4 py-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold transition-all duration-200 hover:shadow-lg hover:scale-105"
+        >
+          Sair
+        </button>
+      </div>
+    </header>
+  }
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 relative z-10" [class.py-6]="isLoggedIn">
+    <router-outlet />
+  </main>
+</div>

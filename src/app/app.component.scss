@@ -1,0 +1,62 @@
+// nuvens decorativas
+.clouds {
+  position: absolute;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.cloud-1 {
+  top: 2.5rem;
+  left: 5rem;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 60px;
+    background:
+      radial-gradient(
+        ellipse 30px 20px at 30px 30px,
+        white 100%,
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 35px 22px at 60px 25px,
+        white 100%,
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 30px 18px at 90px 30px,
+        white 100%,
+        transparent 100%
+      );
+  }
+}
+
+.cloud-2 {
+  top: 8rem;
+  right: 8rem;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 50px;
+    background:
+      radial-gradient(
+        ellipse 25px 18px at 25px 25px,
+        white 100%,
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 28px 20px at 50px 22px,
+        white 100%,
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 25px 16px at 75px 25px,
+        white 100%,
+        transparent 100%
+      );
+  }
+}
