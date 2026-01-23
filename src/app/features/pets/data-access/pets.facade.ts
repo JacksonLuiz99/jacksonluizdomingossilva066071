@@ -1,8 +1,8 @@
-import { Injectable, inject } from "@angular/core";
-import { PetsStore } from "./pets.store";
-import { PetsApiService } from "./pets-api.service";
-import { SnackbarService } from "../../../core/ui/snackbar.service";
-import { PetCreateDto, PetUpdateDto } from "./pets.models";
+import { Injectable, inject } from '@angular/core';
+import { PetsStore } from './pets.store';
+import { PetsApiService } from './pets-api.service';
+import { SnackbarService } from '../../../core/ui/snackbar.service';
+import { PetCreateDto, PetUpdateDto } from './pets.models';
 import {
   catchError,
   debounceTime,
@@ -11,9 +11,9 @@ import {
   of,
   switchMap,
   tap,
-} from "rxjs";
+} from 'rxjs';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class PetsFacade {
   private store = inject(PetsStore);
   private api = inject(PetsApiService);
@@ -49,9 +49,9 @@ export class PetsFacade {
         });
       }),
       catchError((err) => {
-        console.error("[PetsFacade] Erro ao listar pets:", err);
+        console.error('[PetsFacade] Erro ao listar pets:', err);
         this.store.patch({
-          error: err?.error?.message ?? "Erro ao listar pets.",
+          error: err?.error?.message ?? 'Erro ao listar pets.',
         });
         return of(null);
       }),
@@ -61,7 +61,7 @@ export class PetsFacade {
 
   searchByName(name: string) {
     // debounce 300ms + reset page=1
-    this.store.patch({ query: name ?? "", page: 1 });
+    this.store.patch({ query: name ?? '', page: 1 });
     return of(name).pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -86,7 +86,7 @@ export class PetsFacade {
       tap((pet) => this.store.patch({ selected: pet })),
       catchError((err) => {
         this.store.patch({
-          error: err?.error?.message ?? "Erro ao carregar pet.",
+          error: err?.error?.message ?? 'Erro ao carregar pet.',
         });
         return of(null);
       }),
@@ -94,18 +94,47 @@ export class PetsFacade {
     );
   }
 
+  createPet(dto: PetCreateDto) {
+    this.store.patch({ saving: true, error: null });
+    return this.api.create(dto).pipe(
+      tap((p) => {
+        this.store.upsertItem(p);
+        this.snack.success('Pet criado com sucesso.');
+      }),
+      catchError((err) => {
+        this.store.patch({
+          error: err?.error?.message ?? 'Erro ao criar pet.',
+        });
+        this.snack.error(err?.error?.message ?? 'Erro ao criar pet.');
+        return of(null);
+      }),
+      finalize(() => this.store.patch({ saving: false })),
+    );
+  }
 
-
-
- 
-
-
+  updatePet(id: number, dto: PetUpdateDto) {
+    this.store.patch({ saving: true, error: null });
+    return this.api.update(id, dto).pipe(
+      tap((p) => {
+        this.store.upsertItem(p);
+        this.snack.success('Pet atualizado com sucesso.');
+      }),
+      catchError((err) => {
+        this.store.patch({
+          error: err?.error?.message ?? 'Erro ao atualizar pet.',
+        });
+        this.snack.error(err?.error?.message ?? 'Erro ao atualizar pet.');
+        return of(null);
+      }),
+      finalize(() => this.store.patch({ saving: false })),
+    );
+  }
 
   // Carregar TODOS os pets (sem paginação) para autocomplete
   loadAllPets() {
     return this.api.listAll().pipe(
       catchError((err) => {
-        console.error("[PetsFacade] Erro ao listar todos os pets:", err);
+        console.error('[PetsFacade] Erro ao listar todos os pets:', err);
         return of([]);
       }),
     );

@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AppConfigService } from '../../../core/config/app-config.service';
 import { Pet, PetCreateDto, PetUpdateDto } from './pets.models';
 import { map } from 'rxjs';
+import { mapToPageResult } from '../../../shared/components/utils/http.utils';
 
 @Injectable({ providedIn: 'root' })
 export class PetsApiService {
@@ -40,6 +41,29 @@ export class PetsApiService {
 
   create(dto: PetCreateDto) {
     return this.http.post<Pet>(`${this.config.apiBaseUrl}/v1/pets`, dto);
+  }
+
+  update(id: number, dto: PetUpdateDto) {
+    return this.http.put<Pet>(`${this.config.apiBaseUrl}/v1/pets/${id}`, dto);
+  }
+
+  delete(id: number) {
+    return this.http.delete<void>(`${this.config.apiBaseUrl}/v1/pets/${id}`);
+  }
+
+  uploadPhoto(id: number, file: File) {
+    const fd = new FormData();
+    fd.append('foto', file);
+    return this.http.post<any>(
+      `${this.config.apiBaseUrl}/v1/pets/${id}/fotos`,
+      fd,
+    );
+  }
+
+  deletePhoto(petId: number, photoId: number) {
+    return this.http.delete<void>(
+      `${this.config.apiBaseUrl}/v1/pets/${petId}/fotos/${photoId}`,
+    );
   }
 
   // Busca TODOS os pets sem paginação (para autocomplete)
