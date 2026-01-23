@@ -1,0 +1,287 @@
+// Add Pet Button - Premium with shine effect
+.btn-add-pet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.75rem;
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  // efeito de brilho
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
+
+  mat-icon {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(249, 115, 22, 0.45);
+
+    &::before {
+      left: 100%;
+    }
+
+    mat-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// Search Container
+.search-container {
+  margin: 0 auto 2.5rem auto;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+
+  // efeito de brilho
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle,
+      rgba(249, 115, 22, 0.08) 0%,
+      transparent 70%
+    );
+    border-radius: 9999px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  &:has(.mat-focused)::before {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+  }
+}
+
+.search-field {
+  width: 100%;
+
+  ::ng-deep {
+    // Remove underline from fill appearance
+    .mdc-line-ripple {
+      display: none;
+    }
+
+    // Main container com efeito de brilho
+    .mat-mdc-text-field-wrapper {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(255, 247, 237, 0.95) 100%
+      );
+      backdrop-filter: blur(12px);
+      border-radius: 9999px !important;
+      box-shadow:
+        0 8px 16px -4px rgba(249, 115, 22, 0.12),
+        0 4px 8px -2px rgba(0, 0, 0, 0.08),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+
+      // efeito de brilho
+      &::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(
+          135deg,
+          #f97316 0%,
+          #fb923c 50%,
+          #fdba74 100%
+        );
+        border-radius: 9999px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.4s ease;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 12px 24px -6px rgba(249, 115, 22, 0.18),
+          0 8px 12px -4px rgba(0, 0, 0, 0.1),
+          inset 0 1px 3px rgba(255, 255, 255, 0.9);
+      }
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+      background-color: transparent;
+    }
+
+    // esconde o background
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: transparent !important;
+    }
+
+    .mat-mdc-form-field.mat-focused {
+      .mat-mdc-text-field-wrapper {
+        &::before {
+          opacity: 1;
+        }
+
+        box-shadow:
+          0 0 0 4px rgba(249, 115, 22, 0.1),
+          0 16px 32px -8px rgba(249, 115, 22, 0.25),
+          0 12px 16px -6px rgba(0, 0, 0, 0.12),
+          inset 0 2px 4px rgba(255, 255, 255, 1);
+        transform: translateY(-3px) scale(1.01);
+      }
+    }
+
+    .mat-mdc-form-field-label {
+      color: #9ca3af;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+    }
+
+    .mat-mdc-form-field.mat-focused .mat-mdc-form-field-label {
+      color: #f97316 !important;
+      font-weight: 700;
+    }
+
+    .mat-mdc-input-element {
+      color: #1f2937;
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 0.01em;
+
+      &::placeholder {
+        color: #cbd5e1;
+        font-weight: 500;
+        font-style: italic;
+      }
+    }
+
+    // Search icon com animação
+    .mat-icon[matprefix] {
+      color: #d1d5db;
+      margin-right: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mat-mdc-form-field.mat-focused .mat-icon[matprefix] {
+      color: #f97316;
+      transform: scale(1.15) rotate(12deg);
+      filter: drop-shadow(0 2px 4px rgba(249, 115, 22, 0.3));
+    }
+
+    // Clear button com efeito de brilho
+    .mat-mdc-icon-button {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+
+      .mat-icon {
+        color: #9ca3af;
+        transition: all 0.3s ease;
+      }
+
+      &:hover {
+        background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+        transform: scale(1.1) rotate(90deg);
+
+        .mat-icon {
+          color: #f97316;
+          filter: drop-shadow(0 2px 3px rgba(249, 115, 22, 0.3));
+        }
+      }
+
+      &:active {
+        transform: scale(0.95) rotate(90deg);
+      }
+    }
+
+    .mat-ripple-element {
+      background-color: rgba(249, 115, 22, 0.15);
+    }
+  }
+}
+
+// Paginator custom styles - centralizado
+.paginator-container {
+  ::ng-deep {
+    .mat-mdc-paginator {
+      background: transparent;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mat-mdc-paginator-container {
+      justify-content: center !important;
+      padding: 0 16px;
+    }
+
+    .mat-mdc-paginator-page-size-label,
+    .mat-mdc-paginator-range-label {
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .mat-mdc-icon-button {
+      &:not(:disabled) {
+        color: #f97316;
+
+        &:hover {
+          background-color: #fff7ed;
+        }
+      }
+
+      &:disabled {
+        color: #d1d5db;
+      }
+    }
+  }
+}
