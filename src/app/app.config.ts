@@ -9,6 +9,7 @@ import { AppConfigService } from './core/config/app-config.service';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PtBrPaginatorIntl } from './core/i18n/pt-br-paginator-intl';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 import { routes } from './app.routes';
 
@@ -28,5 +29,6 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     { provide: MatPaginatorIntl, useClass: PtBrPaginatorIntl },
+    provideEnvironmentNgxMask(),
   ],
 };
