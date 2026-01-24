@@ -14,9 +14,7 @@ import { fileToDataUrl, isImageFile } from '../utils/file.utils';
 export class PhotoUploadComponent {
   @Input() title = 'Foto';
   @Input() uploading = false;
-  @Input() currentPhotoUrl?: string; // Foto atual do pet/tutor
   @Output() upload = new EventEmitter<File>();
-  @Output() delete = new EventEmitter<void>();
 
   selectedFile: File | null = null;
   previewUrl: string | null = null;

@@ -3,30 +3,6 @@
     <h3 class="m-0 text-lg font-bold text-slate-800">{{ title }}</h3>
   </div>
 
-  <!-- Current Photo Display -->
-  @if (currentPhotoUrl && !previewUrl) {
-    <div class="mb-4 text-center">
-      <div class="relative inline-block">
-        <img
-          [src]="currentPhotoUrl"
-          class="h-[200px] w-full max-w-[200px] rounded-xl object-cover shadow"
-          alt="Foto atual"
-        />
-        <button
-          mat-icon-button
-          type="button"
-          class="!absolute right-2 top-2 !bg-black/70 !text-white hover:!bg-black/90"
-          (click)="delete.emit()"
-          [disabled]="uploading"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-
-      <p class="mt-2 text-sm text-slate-500">Foto atual</p>
-    </div>
-  }
-
   <!-- Drag & Drop Zone -->
   <div
     class="cursor-pointer rounded-xl border-2 border-dashed p-8 text-center transition bg-slate-50 border-slate-300 hover:bg-slate-100"
@@ -65,7 +41,7 @@
         <p class="m-0 text-sm text-slate-500">Arraste uma imagem ou</p>
 
         <label
-          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-br from-orange-500 to-orange-400 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-orange-500/30"
+          class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-br from-orange-500 to-orange-400 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-orange-500/30 cursor-pointer"
         >
           <mat-icon class="!h-5 !w-5">add_photo_alternate</mat-icon>
           <span>Selecionar Arquivo</span>

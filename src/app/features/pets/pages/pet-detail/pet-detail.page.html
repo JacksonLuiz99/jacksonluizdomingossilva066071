@@ -96,13 +96,11 @@
   </div>
 
   <!-- Upload Photo Section -->
-  <div class="mb-8">
+  <div class="mb-8 text-center">
     <app-photo-upload
-      title="Foto de Perfil"
-      [currentPhotoUrl]="pet.foto?.url"
+      title="Insira uma foto do seu pet ou atualize a foto atual"
       [uploading]="(facade.uploadingPhoto$ | async) ?? false"
       (upload)="uploadPhoto(pet.id, $event)"
-      (delete)="pet.foto?.id && deletePetPhoto(pet.id, pet.foto!.id)"
     >
     </app-photo-upload>
   </div>

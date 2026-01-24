@@ -100,13 +100,11 @@
   </div>
 
   <!-- Photo Upload Section -->
-  <div class="mb-8">
+  <div class="mb-8 text-center ">
     <app-photo-upload
-      title="Foto de Perfil do Tutor"
-      [currentPhotoUrl]="tutor.foto?.url"
+      title="Insira a foto do seu tutor ou atualize a foto atual"
       [uploading]="(facade.uploadingPhoto$ | async) ?? false"
       (upload)="uploadTutorPhoto(tutor.id, $event)"
-      (delete)="tutor.foto?.id && deleteTutorPhoto(tutor.id, tutor.foto!.id)"
     >
     </app-photo-upload>
   </div>
