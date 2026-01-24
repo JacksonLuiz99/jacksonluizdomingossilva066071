@@ -1,0 +1,24 @@
+::ng-deep .mat-mdc-autocomplete-panel {
+  background: white !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 0.5rem;
+}
+
+::ng-deep .mat-mdc-option {
+  padding: 0.75rem 1rem !important;
+  min-height: auto !important;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:hover {
+    background: #fff7ed !important;
+  }
+
+  &.mdc-list-item--selected {
+    background: #ffedd5 !important;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

@@ -1,0 +1,213 @@
+<div class="form-container">
+  <!-- Header with Back Button -->
+  <div class="action-bar">
+    <a routerLink="/tutores" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Voltar</span>
+    </a>
+  </div>
+
+  <div class="form-card">
+    <h1 class="form-title">{{ isEdit ? 'Editar' : 'Novo' }} Tutor</h1>
+    <p class="form-subtitle">Preencha os dados do tutor</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      <div class="form-field">
+        <label class="field-label">Nome Completo *</label>
+        <input
+          type="text"
+          formControlName="nome"
+          class="field-input"
+          [class.invalid]="form.get('nome')?.invalid && form.get('nome')?.touched"
+          placeholder="Ex: João da Silva"
+        />
+        @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+        <span class="validation-error"
+          >Nome é obrigatório (min 3 caracteres)</span
+        >
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="field-input"
+          [class.invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+          placeholder="Ex: joao.silva@email.com"
+        />
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+        <span class="validation-error">Email inválido</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Telefone *</label>
+        <input
+          type="tel"
+          formControlName="telefone"
+          mask="(00) 00000-0000"
+          [dropSpecialCharacters]="false"
+          class="field-input"
+          [class.invalid]="form.get('telefone')?.invalid && form.get('telefone')?.touched"
+          placeholder="(65) 99999-9999"
+        />
+        @if (form.get('telefone')?.invalid && form.get('telefone')?.touched) {
+        <span class="validation-error">Telefone obrigatório</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">CPF</label>
+        <input
+          type="text"
+          formControlName="cpf"
+          mask="000.000.000-00"
+          [dropSpecialCharacters]="false"
+          class="field-input"
+          [class.invalid]="form.get('cpf')?.invalid && form.get('cpf')?.touched"
+          placeholder="000.000.000-00"
+        />
+        @if (form.get('cpf')?.invalid && form.get('cpf')?.touched) {
+        <span class="validation-error">CPF inválido</span>
+        }
+      </div>
+
+      <!-- Endereço Section -->
+      <div class="col-span-full mt-2 mb-1">
+        <h3 class="text-lg font-semibold text-gray-700 border-b pb-1">
+          Endereço
+        </h3>
+      </div>
+
+      <!-- CEP & Busca -->
+      <div class="form-field">
+        <label class="field-label">CEP *</label>
+        <div class="flex gap-2">
+          <input
+            type="text"
+            formControlName="cep"
+            mask="00000-000"
+            class="field-input flex-1"
+            [class.invalid]="form.get('cep')?.invalid && form.get('cep')?.touched"
+            placeholder="00000-000"
+            (blur)="buscarCep()"
+          />
+          <button
+            type="button"
+            mat-icon-button
+            class="bg-orange-100 text-orange-600 hover:bg-orange-200 rounded-lg"
+            (click)="buscarCep()"
+            [disabled]="loadingCep"
+          >
+            @if(loadingCep) {
+            <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+            <mat-icon>search</mat-icon>
+            }
+          </button>
+        </div>
+        @if (form.get('cep')?.invalid && form.get('cep')?.touched) {
+        <span class="validation-error">CEP obrigatório</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Número *</label>
+        <input
+          type="text"
+          formControlName="numero"
+          class="field-input"
+          [class.invalid]="form.get('numero')?.invalid && form.get('numero')?.touched"
+          placeholder="Nº"
+        />
+        @if (form.get('numero')?.invalid && form.get('numero')?.touched) {
+        <span class="validation-error">Obrigatório</span>
+        }
+      </div>
+
+      <div class="form-field full-width">
+        <label class="field-label">Logradouro (Rua) *</label>
+        <input
+          type="text"
+          formControlName="logradouro"
+          class="field-input"
+          [class.invalid]="form.get('logradouro')?.invalid && form.get('logradouro')?.touched"
+          placeholder="Nome da rua"
+        />
+        @if (form.get('logradouro')?.invalid && form.get('logradouro')?.touched)
+        {
+        <span class="validation-error">Logradouro obrigatório</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Bairro *</label>
+        <input
+          type="text"
+          formControlName="bairro"
+          class="field-input"
+          [class.invalid]="form.get('bairro')?.invalid && form.get('bairro')?.touched"
+          placeholder="Bairro"
+        />
+        @if (form.get('bairro')?.invalid && form.get('bairro')?.touched) {
+        <span class="validation-error">Bairro obrigatório</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Cidade *</label>
+        <input
+          type="text"
+          formControlName="cidade"
+          class="field-input"
+          [class.invalid]="form.get('cidade')?.invalid && form.get('cidade')?.touched"
+          placeholder="Cidade"
+        />
+        @if (form.get('cidade')?.invalid && form.get('cidade')?.touched) {
+        <span class="validation-error">Cidade obrigatória</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">Estado (UF) *</label>
+        <input
+          type="text"
+          formControlName="estado"
+          class="field-input"
+          maxlength="2"
+          [class.invalid]="form.get('estado')?.invalid && form.get('estado')?.touched"
+          placeholder="UF"
+        />
+        @if (form.get('estado')?.invalid && form.get('estado')?.touched) {
+        <span class="validation-error">UF obrigatória</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="form.invalid || (facade.saving$ | async)"
+        class="submit-button"
+      >
+        <mat-icon
+          >{{ (facade.saving$ | async) ? 'hourglass_empty' : 'save' }}</mat-icon
+        >
+        <span
+          >{{ (facade.saving$ | async) ? 'Salvando...' : 'Salvar Tutor' }}</span
+        >
+      </button>
+
+      <!-- Error Message -->
+      @if (facade.error$ | async; as err) {
+      <p class="error-text">{{ err }}</p>
+      }
+    </form>
+  </div>
+
+  <!-- aviso -->
+  <div class="hint-text">
+    <mat-icon>info</mat-icon>
+    Atenção: Upload de foto é feito no <strong>Perfil do Tutor</strong> após cadastro
+  </div>
+</div>

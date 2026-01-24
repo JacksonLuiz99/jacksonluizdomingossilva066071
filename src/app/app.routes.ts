@@ -14,10 +14,17 @@ export const routes: Routes = [
   },
 
   {
-    path: "pets",
+    path: 'pets',
     canActivate: [authGuard],
     loadChildren: () =>
-      import("./features/pets/pets.routes").then((m) => m.PETS_ROUTES),
+      import('./features/pets/pets.routes').then((m) => m.PETS_ROUTES),
+  },
+
+  {
+    path: 'tutores',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/tutores/tutores.routes').then((m) => m.TUTORES_ROUTES),
   },
 
   { path: '**', redirectTo: 'pets' },

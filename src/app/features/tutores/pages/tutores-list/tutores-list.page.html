@@ -1,0 +1,145 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10"
+  >
+    <div class="flex-1">
+      <div class="flex items-center gap-4 mb-2">
+        <mat-icon class="text-5xl w-10 h-10 text-orange-500">people</mat-icon>
+        <h1 class="title">Meus Tutores</h1>
+      </div>
+      <p class="text-gray-600 ml-14">Gerencie os tutores cadastrados</p>
+    </div>
+    <a routerLink="/tutores/novo" class="btn-add-pet">
+      <mat-icon>add_circle</mat-icon>
+      <span>Adicionar Tutor</span>
+    </a>
+  </div>
+
+  <!-- Search -->
+  <div class="search-container">
+    <mat-form-field
+      appearance="fill"
+      subscriptSizing="dynamic"
+      class="search-field"
+    >
+      <mat-label>Buscar por nome</mat-label>
+      <input
+        matInput
+        [formControl]="searchControl"
+        placeholder="Digite o nome do tutor..."
+        autocomplete="off"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+      @if (searchControl.value) {
+      <button
+        matSuffix
+        mat-icon-button
+        (click)="searchControl.setValue('')"
+        aria-label="Limpar busca"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+    </mat-form-field>
+  </div>
+
+  <!-- Loading Spinner -->
+  @if (loading) {
+  <div class="flex justify-center items-center min-h-[400px]">
+    <mat-spinner diameter="50" color="warn"></mat-spinner>
+  </div>
+  }
+
+  <!-- Tutores List -->
+  @if (!loading) {
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8"
+  >
+    @for (tutor of tutores; track tutor.id) {
+    <a
+      [routerLink]="['/tutores', tutor.id]"
+      class="pet-card block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
+    >
+      <div
+        class="relative w-full pt-[75%] overflow-hidden bg-gradient-to-br from-orange-200 to-orange-100"
+      >
+        <img
+          [src]="tutor.foto?.url || '/assets/images/placeholder-avatar.png'"
+          [alt]="tutor.nome"
+          class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+        />
+        <div class="pet-overlay">
+          <mat-icon>visibility</mat-icon>
+        </div>
+      </div>
+      <div class="p-5 text-center">
+        <h3
+          class="text-2xl font-bold text-gray-900 mb-2 overflow-hidden text-ellipsis whitespace-nowrap transition-colors duration-300 hover:text-orange-500"
+        >
+          {{ tutor.nome | titlecase }}
+        </h3>
+        <p
+          class="text-gray-600 text-base mb-4 overflow-hidden text-ellipsis whitespace-nowrap text-center"
+        >
+          {{ tutor.email || 'Sem email' }}
+        </p>
+        <div
+          class="flex items-center justify-center gap-2 flex-wrap pt-3 border-t border-gray-100"
+        >
+          @if (tutor.telefone) {
+          <span
+            class="pet-age inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full text-orange-700 text-sm font-semibold"
+          >
+            <mat-icon class="text-lg w-[1.1rem] h-[1.1rem]">phone</mat-icon>
+            {{ tutor.telefone }}
+          </span>
+          } @if (tutor.pets && tutor.pets.length > 0) {
+          <span
+            class="pet-age inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full text-orange-700 text-sm font-semibold"
+          >
+            <mat-icon class="text-lg w-[1.1rem] h-[1.1rem]">pets</mat-icon>
+            {{ tutor.pets.length }} {{ tutor.pets.length === 1 ? 'pet' : 'pets'
+            }}
+          </span>
+          }
+        </div>
+      </div>
+    </a>
+    } @empty {
+    <div
+      class="col-span-full flex flex-col items-center justify-center p-16 bg-white rounded-2xl shadow-md min-h-[400px]"
+    >
+      <mat-icon class="text-[5rem] w-20 h-20 text-orange-200 mb-4"
+        >person_off</mat-icon
+      >
+      <h3 class="text-2xl font-bold text-gray-900 mb-2">
+        Nenhum tutor cadastrado
+      </h3>
+      <p class="text-gray-600 mb-8">Comece adicionando seu primeiro tutor!</p>
+      <a routerLink="/tutores/novo" class="btn-add-pet">
+        <mat-icon>add_circle</mat-icon>
+        <span>Adicionar Tutor</span>
+      </a>
+    </div>
+    }
+  </div>
+
+  <!-- Material Paginator -->
+  @if (total > 0) {
+  <div
+    class="paginator-container bg-white rounded-2xl overflow-hidden shadow-md"
+  >
+    <mat-paginator
+      [length]="total"
+      [pageSize]="size"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[10]"
+      [showFirstLastButtons]="true"
+      (page)="onPageChange($event)"
+      aria-label="Selecione a página"
+    >
+    </mat-paginator>
+  </div>
+  } }
+</div>

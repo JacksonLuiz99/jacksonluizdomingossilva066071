@@ -2,6 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { AppConfigService } from "../../../core/config/app-config.service";
 import { map } from "rxjs";
+import { Tutor, TutorCreateDto, TutorUpdateDto } from "./tutores.models";
 
 @Injectable({ providedIn: "root" })
 export class TutoresApiService {
