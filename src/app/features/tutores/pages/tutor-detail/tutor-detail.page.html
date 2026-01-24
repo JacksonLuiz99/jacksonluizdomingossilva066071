@@ -40,45 +40,58 @@
     class="bg-white rounded-3xl p-8 sm:p-10 shadow-xl mb-8 text-center relative overflow-hidden"
   >
     <div
-      class="inline-block mb-6 relative hover:scale-105 transition-transform duration-300"
-    >
+      class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-orange-50/50 to-transparent pointer-events-none"
+    ></div>
+
+    <div class="relative inline-block mb-6 group">
+      <div
+        class="absolute inset-0 bg-orange-500 rounded-3xl rotate-6 opacity-20 transition-transform duration-300 group-hover:rotate-12"
+      ></div>
       <img
         [src]="tutor.foto?.url || '/assets/images/placeholder-avatar.png'"
         [alt]="tutor.nome"
-        class="w-36 h-36 object-cover rounded-full shadow-2xl"
+        class="relative w-64 h-64 sm:w-80 sm:h-80 object-cover rounded-3xl shadow-2xl transition-transform duration-300 group-hover:scale-105 z-10"
       />
+      @if (tutor.foto?.id) {
+      <button
+        type="button"
+        (click)="deleteTutorPhoto(tutor.id, tutor.foto!.id)"
+        class="absolute -right-3 top-2 z-20 w-12 h-12 bg-white text-red-500 rounded-full shadow-lg border-2 border-red-100 flex items-center justify-center transition-all hover:bg-red-50 hover:border-red-300 hover:scale-110 cursor-pointer"
+        title="Excluir foto"
+      >
+        <mat-icon class="!text-2xl !w-6 !h-6">delete</mat-icon>
+      </button>
+      }
     </div>
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto relative z-10">
       <h1
-        class="text-3xl sm:text-4xl font-extrabold bg-gradient-to-br from-orange-500 to-orange-400 bg-clip-text text-transparent mb-6"
+        class="text-4xl sm:text-5xl font-extrabold bg-gradient-to-br from-orange-500 to-orange-400 bg-clip-text text-transparent mb-6"
       >
         {{ tutor.nome | titlecase }}
       </h1>
       <div class="flex flex-wrap justify-center gap-4">
         @if (tutor.telefone) {
         <div
-          class="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full text-orange-700 font-semibold text-sm cursor-pointer transition-all hover:bg-orange-100 hover:-translate-y-0.5 hover:shadow-sm"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50/80 backdrop-blur-sm border border-orange-100 rounded-full text-orange-700 font-semibold shadow-sm cursor-pointer transition-all hover:bg-orange-100 hover:-translate-y-0.5"
           (click)="confirmPhone(tutor.telefone)"
         >
-          <mat-icon class="text-orange-500 text-lg w-5 h-5">phone</mat-icon>
+          <mat-icon class="text-orange-500">phone</mat-icon>
           <span>{{ tutor.telefone }}</span>
         </div>
         } @if (tutor.email) {
         <div
-          class="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full text-orange-700 font-semibold text-sm cursor-pointer transition-all hover:bg-orange-100 hover:-translate-y-0.5 hover:shadow-sm"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50/80 backdrop-blur-sm border border-orange-100 rounded-full text-orange-700 font-semibold shadow-sm cursor-pointer transition-all hover:bg-orange-100 hover:-translate-y-0.5"
           (click)="confirmEmail(tutor.email)"
         >
-          <mat-icon class="text-orange-500 text-lg w-5 h-5">email</mat-icon>
+          <mat-icon class="text-orange-500">email</mat-icon>
           <span>{{ tutor.email }}</span>
         </div>
         } @if (tutor.endereco) {
         <div
-          class="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full text-orange-700 font-semibold text-sm cursor-pointer transition-all hover:bg-orange-100 hover:-translate-y-0.5 hover:shadow-sm"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50/80 backdrop-blur-sm border border-orange-100 rounded-full text-orange-700 font-semibold shadow-sm cursor-pointer transition-all hover:bg-orange-100 hover:-translate-y-0.5"
           (click)="openAddressOptions(tutor.endereco)"
         >
-          <mat-icon class="text-orange-500 text-lg w-5 h-5"
-            >location_on</mat-icon
-          >
+          <mat-icon class="text-orange-500">location_on</mat-icon>
           <span>{{ tutor.endereco }}</span>
         </div>
         }
@@ -101,7 +114,9 @@
   <div class="mb-8">
     <div class="bg-white rounded-3xl p-8 shadow-xl">
       <h2 class="flex items-center gap-3 text-xl font-bold text-gray-800 mb-2">
-        <mat-icon class="text-orange-500 text-3xl w-8 h-8">add_circle</mat-icon>
+        <mat-icon class="text-orange-500 !text-3xl !w-8 !h-8"
+          >add_circle</mat-icon
+        >
         <span>Vincular Novo Pet</span>
       </h2>
       <p class="text-gray-500 text-sm mb-6 ml-10">
@@ -130,10 +145,10 @@
             <mat-option [value]="pet">
               <div class="flex justify-between items-center w-full gap-4">
                 <span class="font-bold text-gray-900 text-base flex-1"
-                  >{{ pet.nome }}</span
+                  >{{ pet.nome | titlecase }}</span
                 >
                 <span class="text-sm text-orange-500 font-semibold italic"
-                  >{{ pet.raca }}</span
+                  >{{ pet.raca | titlecase }}</span
                 >
               </div>
             </mat-option>
@@ -157,7 +172,7 @@
 
   <div class="mb-8">
     <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-800 mb-6">
-      <mat-icon class="text-orange-500 text-3xl w-8 h-8">pets</mat-icon>
+      <mat-icon class="text-orange-500 !text-3xl !w-8 !h-8">pets</mat-icon>
       <span>Pets Vinculados</span>
       <span
         class="inline-flex items-center justify-center min-w-[2rem] h-8 px-3 bg-gradient-to-br from-orange-500 to-orange-400 text-white rounded-full text-sm font-bold ml-auto"

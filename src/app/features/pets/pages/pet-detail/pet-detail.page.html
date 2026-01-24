@@ -61,6 +61,16 @@
         [alt]="pet.nome"
         class="relative w-64 h-64 sm:w-80 sm:h-80 object-cover rounded-3xl shadow-2xl transition-transform duration-300 group-hover:scale-105 z-10"
       />
+      @if (pet.foto?.id) {
+      <button
+        type="button"
+        (click)="deletePetPhoto(pet.id, pet.foto!.id)"
+        class="absolute -right-3 top-2 z-20 w-12 h-12 bg-white text-red-500 rounded-full shadow-lg border-2 border-red-100 flex items-center justify-center transition-all hover:bg-red-50 hover:border-red-300 hover:scale-110 cursor-pointer"
+        title="Excluir foto"
+      >
+        <mat-icon class="!text-2xl !w-6 !h-6">delete</mat-icon>
+      </button>
+      }
     </div>
     <div class="max-w-2xl mx-auto relative z-10">
       <h1
@@ -106,3 +116,4 @@
     <span>{{ err }}</span>
   </div>
   }}
+</div>
