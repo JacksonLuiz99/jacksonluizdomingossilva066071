@@ -12,8 +12,13 @@ export const PETS_ROUTES: Routes = [
       import("./pages/pet-form/pet-form.page").then((m) => m.PetFormPage),
   },
   {
-    path: "editar/:id",
+    path: ":id/editar",
     loadComponent: () =>
       import("./pages/pet-form/pet-form.page").then((m) => m.PetFormPage),
+  },
+  {
+    path: ":id",
+    loadComponent: () =>
+      import("./pages/pet-detail/pet-detail.page").then((m) => m.PetDetailPage),
   },
 ];

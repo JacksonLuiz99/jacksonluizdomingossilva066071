@@ -1,0 +1,108 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Back Button & Actions -->
+  <div
+    class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8"
+  >
+    <a
+      routerLink="/pets"
+      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all duration-200 bg-white text-gray-700 border-2 border-gray-200 hover:bg-gray-50 hover:border-orange-500 hover:text-orange-500 group"
+    >
+      <mat-icon class="transition-transform group-hover:-translate-x-1"
+        >arrow_back</mat-icon
+      >
+      <span>Voltar</span>
+    </a>
+
+    <div class="flex gap-3">
+      <a
+        [routerLink]="['/pets', petId, 'editar']"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-white transition-all bg-gradient-to-br from-blue-500 to-blue-400 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </a>
+      <button
+        (click)="confirmDelete()"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-white transition-all bg-gradient-to-br from-red-500 to-red-400 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-500/30"
+      >
+        <mat-icon>delete</mat-icon>
+        <span>Excluir</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (facade.loadingDetail$ | async) {
+  <div class="h-1.5 w-full bg-orange-100 rounded-full overflow-hidden mb-6">
+    <div
+      class="h-full bg-orange-500 animate-[loading_1.5s_ease-in-out_infinite] w-1/2 rounded-full"
+    ></div>
+  </div>
+  }
+
+  <!-- Pet Details -->
+  @if (facade.selectedPet$ | async; as pet) {
+
+  <!-- Hero Section: Large Profile Photo -->
+  <div
+    class="bg-white rounded-3xl p-8 sm:p-10 shadow-xl mb-8 text-center relative overflow-hidden"
+  >
+    <!-- Background decorative gradient -->
+    <div
+      class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-orange-50/50 to-transparent pointer-events-none"
+    ></div>
+
+    <div class="relative inline-block mb-6 group">
+      <div
+        class="absolute inset-0 bg-orange-500 rounded-3xl rotate-6 opacity-20 transition-transform duration-300 group-hover:rotate-12"
+      ></div>
+      <img
+        [src]="pet.foto?.url || '/assets/images/placeholder-pet.png'"
+        [alt]="pet.nome"
+        class="relative w-64 h-64 sm:w-80 sm:h-80 object-cover rounded-3xl shadow-2xl transition-transform duration-300 group-hover:scale-105 z-10"
+      />
+    </div>
+    <div class="max-w-2xl mx-auto relative z-10">
+      <h1
+        class="text-4xl sm:text-5xl font-extrabold bg-gradient-to-br from-orange-500 to-orange-400 bg-clip-text text-transparent mb-6"
+      >
+        {{ pet.nome }}
+      </h1>
+      <div class="flex flex-wrap justify-center gap-4">
+        <div
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50/80 backdrop-blur-sm border border-orange-100 rounded-full text-orange-700 font-semibold shadow-sm hover:bg-orange-100 transition-colors"
+        >
+          <mat-icon class="text-orange-500">pets</mat-icon>
+          <span>{{ pet.raca }}</span>
+        </div>
+        <div
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-50/80 backdrop-blur-sm border border-orange-100 rounded-full text-orange-700 font-semibold shadow-sm hover:bg-orange-100 transition-colors"
+        >
+          <mat-icon class="text-orange-500">cake</mat-icon>
+          <span>{{ pet.idade }} {{ pet.idade === 1 ? 'ano' : 'anos' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Photo Section -->
+  <div class="mb-8">
+    <app-photo-upload
+      title="Foto de Perfil"
+      [currentPhotoUrl]="pet.foto?.url"
+      [uploading]="(facade.uploadingPhoto$ | async) ?? false"
+      (upload)="uploadPhoto(pet.id, $event)"
+      (delete)="pet.foto?.id && deletePetPhoto(pet.id, pet.foto!.id)"
+    >
+    </app-photo-upload>
+  </div>
+
+  <!-- Error Message -->
+  @if (facade.error$ | async; as err) {
+  <div
+    class="flex items-center gap-3 p-6 bg-red-50 border-l-4 border-red-600 rounded-xl text-red-600 font-medium"
+  >
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ err }}</span>
+  </div>
+  }}

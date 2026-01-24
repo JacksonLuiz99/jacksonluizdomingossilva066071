@@ -12,7 +12,7 @@ import { MatInputModule } from "@angular/material/input";
 import { map, Subject, takeUntil } from "rxjs";
 
 import { PetsFacade } from "../../data-access/pets.facade";
-import { TitleCasePipe } from "../../../../shared/components/pipes/titlecase.pipe";
+import { TitleCasePipe } from "../../../../shared/components/ui/pipes/titlecase.pipe";
 
 @Component({
   standalone: true,

@@ -130,6 +130,60 @@ export class PetsFacade {
     );
   }
 
+  deletePet(id: number) {
+    this.store.patch({ saving: true, error: null });
+    return this.api.delete(id).pipe(
+      tap(() => {
+        this.store.removeItem(id);
+        this.snack.success('Pet excluído com sucesso.');
+      }),
+      catchError((err) => {
+        this.store.patch({
+          error: err?.error?.message ?? 'Erro ao excluir pet.',
+        });
+        this.snack.error(err?.error?.message ?? 'Erro ao excluir pet.');
+        return of(null);
+      }),
+      finalize(() => this.store.patch({ saving: false })),
+    );
+  }
+
+  uploadPetPhoto(id: number, file: File) {
+    this.store.patch({ uploadingPhoto: true, error: null });
+    return this.api.uploadPhoto(id, file).pipe(
+      tap(() => {
+        this.store.patch({ uploadingPhoto: false });
+        this.snack.success('Foto do pet carregada com sucesso.');
+      }),
+      catchError((err) => {
+        this.store.patch({
+          error: err?.error?.message ?? 'Erro ao carregar foto do pet.',
+        });
+        this.snack.error(err?.error?.message ?? 'Erro ao carregar foto do pet.');
+        return of(null);
+      }),
+      finalize(() => this.store.patch({ uploadingPhoto: false })),
+    );
+  }
+
+  deletePetPhoto(petId: number, photoId: number) {
+    this.store.patch({ saving: true, error: null });
+    return this.api.deletePhoto(petId, photoId).pipe(
+      tap(() => {
+        this.store.patch({ saving: false });
+        this.snack.success('Foto do pet excluída com sucesso.');
+      }),
+      catchError((err) => {
+        this.store.patch({
+          error: err?.error?.message ?? 'Erro ao excluir foto do pet.',
+        });
+        this.snack.error(err?.error?.message ?? 'Erro ao excluir foto do pet.');
+        return of(null);
+      }),
+      finalize(() => this.store.patch({ saving: false })),
+    );
+  }
+
   // Carregar TODOS os pets (sem paginação) para autocomplete
   loadAllPets() {
     return this.api.listAll().pipe(
