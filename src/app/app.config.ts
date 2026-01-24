@@ -7,6 +7,8 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppConfigService } from './core/config/app-config.service';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PtBrPaginatorIntl } from './core/i18n/pt-br-paginator-intl';
 
 import { routes } from './app.routes';
 
@@ -25,5 +27,6 @@ export const appConfig: ApplicationConfig = {
       deps: [AppConfigService],
       multi: true,
     },
+    { provide: MatPaginatorIntl, useClass: PtBrPaginatorIntl },
   ],
 };
