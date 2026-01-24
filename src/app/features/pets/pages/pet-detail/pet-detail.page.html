@@ -105,6 +105,73 @@
     </app-photo-upload>
   </div>
 
+  <!-- Tutores Vinculados -->
+  <div class="mb-8">
+    <h2 class="flex items-center gap-3 text-2xl font-bold text-gray-800 mb-6">
+      <mat-icon class="text-orange-500 !text-3xl !w-8 !h-8">people</mat-icon>
+      <span>Tutores Vinculados</span>
+      <span
+        class="inline-flex items-center justify-center min-w-[2rem] h-8 px-3 bg-gradient-to-br from-orange-500 to-orange-400 text-white rounded-full text-sm font-bold ml-auto"
+      >
+        {{ (pet.tutores ?? []).length }} {{ (pet.tutores ?? []).length === 1 ?
+        'Tutor' : 'Tutores' }}
+      </span>
+    </h2>
+
+    @if ((pet.tutores ?? []).length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      @for (tutor of pet.tutores; track tutor.id) {
+      <div
+        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:-translate-y-1 hover:shadow-lg hover:border-orange-200 transition-all duration-300 flex items-start gap-5"
+      >
+        <img
+          [src]="tutor.foto?.url || '/assets/images/placeholder-avatar.png'"
+          [alt]="tutor.nome"
+          class="w-20 h-20 rounded-full object-cover shadow-md border-2 border-white"
+        />
+        <div class="flex-1 min-w-0">
+          <h3 class="text-xl font-bold text-gray-800 mb-2 truncate">
+            {{ tutor.nome | titlecase }}
+          </h3>
+
+          @if (tutor.telefone) {
+          <div class="flex items-center gap-2 text-gray-500 text-sm mb-1">
+            <mat-icon class="text-gray-400 !text-lg !w-5 !h-5">phone</mat-icon>
+            <span>{{ tutor.telefone }}</span>
+          </div>
+          } @if (tutor.email) {
+          <div class="flex items-center gap-2 text-gray-500 text-sm mb-2">
+            <mat-icon class="text-gray-400 !text-lg !w-5 !h-5">email</mat-icon>
+            <span>{{ tutor.email }}</span>
+          </div>
+          }
+
+          <a
+            [routerLink]="['/tutores', tutor.id]"
+            class="inline-flex items-center gap-1.5 mt-3 text-orange-500 font-semibold text-sm group/link hover:text-orange-600 transition-colors cursor-pointer"
+          >
+            <mat-icon
+              class="!text-lg !w-5 !h-5 transition-transform group-hover/link:translate-x-1"
+              >arrow_forward</mat-icon
+            >
+            <span>Ver Perfil do Tutor</span>
+          </a>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div
+      class="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100"
+    >
+      <mat-icon class="!text-6xl !w-16 !h-16 text-gray-300 mb-4"
+        >person_off</mat-icon
+      >
+      <p class="text-gray-500 text-lg">Nenhum tutor foi vinculado a este pet</p>
+    </div>
+    }
+  </div>
+
   <!-- Error Message -->
   @if (facade.error$ | async; as err) {
   <div
