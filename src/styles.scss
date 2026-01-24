@@ -9,7 +9,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 body {
@@ -21,7 +21,7 @@ body {
 * {
   cursor:
     url("assets/cursors/paw-default.png") 12 12,
-    auto !important;
+    auto;
 }
 
 /* Cursor pointer para elementos clicáveis */
@@ -34,14 +34,31 @@ button,
 .mat-mdc-mini-fab,
 .mat-mdc-chip,
 .mat-mdc-tab,
+.mat-mdc-option,
 .clickable,
 [role="button"],
 input[type="submit"],
 input[type="button"],
-select {
+select,
+.pet-card,
+.btn-add-pet,
+.back-button,
+.cursor-pointer {
   cursor:
     url("assets/cursors/paw-pointer.png") 24 24,
     pointer !important;
+}
+
+/* Garantir que elementos filhos de cards e botões herdem o cursor */
+.pet-card *,
+.btn-add-pet *,
+.back-button *,
+.cursor-pointer *,
+a > mat-icon,
+a > span,
+button > mat-icon,
+button > span {
+  cursor: inherit !important;
 }
 
 /* SCSS (somente quando Tailwind não cobre bem):
