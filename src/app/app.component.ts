@@ -1,18 +1,14 @@
 import { Component, inject } from '@angular/core';
-import {
-  RouterOutlet,
-  RouterLink,
-  RouterLinkActive,
-  Router,
-} from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthFacade } from './core/auth/auth.facade';
 import { AppConfigService } from './core/config/app-config.service';
+import { HeaderComponent } from './shared/components/layout/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -30,10 +26,5 @@ export class AppComponent {
 
   get isLoggedIn(): boolean {
     return !window.location.pathname.includes('/login');
-  }
-
-  logout() {
-    this.auth.logout();
-    this.router.navigateByUrl('/login');
   }
 }

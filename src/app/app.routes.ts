@@ -27,5 +27,14 @@ export const routes: Routes = [
       import('./features/tutores/tutores.routes').then((m) => m.TUTORES_ROUTES),
   },
 
+  {
+    path: 'health-checks',
+    redirectTo: 'pets',
+  },
+  {
+    path: 'contato',
+    redirectTo: 'pets',
+  },
+
   { path: '**', redirectTo: 'pets' },
 ];
