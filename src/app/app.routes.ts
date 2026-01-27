@@ -33,7 +33,10 @@ export const routes: Routes = [
   },
   {
     path: 'contato',
-    redirectTo: 'pets',
+    loadChildren: () =>
+      import('./features/contacts/contacts.routes').then(
+        (m) => m.CONTACT_ROUTES,
+      ),
   },
 
   { path: '**', redirectTo: 'pets' },

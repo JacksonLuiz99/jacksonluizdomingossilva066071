@@ -1,0 +1,166 @@
+<div class="min-h-screen px-1">
+  <div class="container mx-auto px-4 max-w-4xl">
+    <div
+      class="flex flex-col items-center text-center mb-12 animate-fade-in-down"
+    >
+      <div class="relative mb-6 group">
+        <div
+          class="relative w-32 h-32 rounded-full overflow-hidden bg-gradient-to-br from-orange-200 to-orange-100 shadow-xl border-4 border-white transition-transform duration-300 hover:scale-105"
+        >
+          <img
+            [src]="profile.avatar"
+            alt="Avatar"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+      <h1 class="text-4xl font-black text-gray-800 mb-2 tracking-tight">
+        {{ profile.welcomeMessage }}
+      </h1>
+      <p class="text-xl text-gray-600 font-medium">Jackson Luiz</p>
+      <p class="text-orange-500 font-bold uppercase tracking-wide text-sm mt-1">
+        Desenvolvedor Front-End
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="space-y-8 animate-fade-in-up delay-100">
+        <div
+          class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-orange-100"
+        >
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-orange-100 p-3 rounded-2xl text-orange-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.26 10.147a60.436 60.436 0 0 0-.491 6.347A48.627 48.627 0 0 1 12 20.904a48.627 48.627 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.57 50.57 0 0 0-2.658-.813A59.905 59.905 0 0 1 12 3.493a59.902 59.902 0 0 1 10.499 5.516 40.13 40.13 0 0 0-3.045 1.087m-3.85 24.16a25.975 25.975 0 0 1-5.077 5.068 8.017 8.017 0 0 0-2.316 2.05h13.987a8.552 8.552 0 0 0-2.361-2.222 25.975 25.975 0 0 1-5.115-5.078 25.93 25.93 0 0 1-5.116-4.904ZM2.502 18.237c.753-.559 1.579-1.037 2.455-1.425ZM9 12.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800">Formação Acadêmica</h2>
+          </div>
+
+          <ul class="space-y-4">
+            <li *ngFor="let item of education" class="flex items-start gap-3">
+              <div
+                class="mt-1.5 h-2 w-2 rounded-full bg-orange-400 shrink-0"
+              ></div>
+              <span class="text-gray-600 font-medium leading-relaxed"
+                >{{ item }}</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div
+          class="hidden md:block bg-white rounded-3xl p-8 shadow-lg border border-teal-100"
+        >
+          <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">
+            Conecte-se comigo
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            <a
+              *ngFor="let link of socialLinks"
+              [href]="link.url"
+              target="_blank"
+              class="flex items-center justify-center gap-3 p-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-md group"
+              [ngClass]="link.color"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 fill-current text-white"
+                viewBox="0 0 24 24"
+              >
+                <path [attr.d]="link.svgPath" />
+              </svg>
+              <span [class]="link.textColor" class="font-bold whitespace-nowrap"
+                >{{ link.name }}</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-8 animate-fade-in-up delay-200">
+        <div
+          class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-teal-100"
+        >
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-teal-100 p-3 rounded-2xl text-teal-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-8"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
+                />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800">
+              Tecnologias em que tenho experiencia
+            </h2>
+          </div>
+
+          <div class="space-y-4">
+            <div
+              *ngFor="let tech of technologies"
+              class="group p-4 rounded-2xl bg-gray-50 hover:bg-teal-50 transition-colors duration-300"
+            >
+              <div class="flex items-baseline gap-2">
+                <span
+                  class="font-bold text-gray-800 text-lg group-hover:text-teal-700 transition-colors"
+                  >{{ tech.name }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:hidden grid grid-cols-2 gap-4">
+          <a
+            *ngFor="let link of socialLinks"
+            [href]="link.url"
+            target="_blank"
+            class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl shadow-md transition-transform active:scale-95"
+            [ngClass]="link.color"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 h-8 fill-current text-white"
+              viewBox="0 0 24 24"
+            >
+              <path [attr.d]="link.svgPath" />
+            </svg>
+            <span [class]="link.textColor" class="font-bold"
+              >{{ link.name }}</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 text-center text-gray-500 text-sm font-medium">
+      Desenvolvido por
+      <a
+        href="https://conectdevjackson.netlify.app/"
+        target="_blank"
+        class="text-orange-500 hover:text-orange-600 transition-colors"
+        >Jackson Luiz &copy;</a
+      >
+    </div>
+  </div>
+</div>
