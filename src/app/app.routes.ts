@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'pets',
+    redirectTo: 'login',
   },
   {
     path: 'login',
