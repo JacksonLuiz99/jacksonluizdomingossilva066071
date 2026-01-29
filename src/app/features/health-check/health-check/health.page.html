@@ -1,56 +1,222 @@
-<div class="grid gap-4">
-  <div>
-    <h1 class="text-2xl font-extrabold">Health</h1>
-    <p class="text-sm text-gray-600">
-      Liveness / Readiness / Health + versão e build.
-    </p>
+<div class="rounded-lg bg-gray-50/50 p-10">
+  <header
+    class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4"
+  >
+    <div>
+      <h1
+        class="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3"
+      >
+        <div class="p-2 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-200">
+          <mat-icon class="text-white !w-6 !h-6 text-2xl"
+            >monitor_heart</mat-icon
+          >
+        </div>
+        System Health
+      </h1>
+      <p class="text-gray-500 mt-1 font-medium ml-1">
+        Monitoramento em tempo real de infraestrutura e serviços
+      </p>
+    </div>
+
+    <div
+      class="flex items-center gap-3 bg-white p-1.5 rounded-xl shadow-sm border border-gray-100"
+    >
+      <button
+        mat-button
+        (click)="toggleAutoRefresh()"
+        matTooltip="Ativar/Desativar atualização automática"
+        [class.bg-indigo-50]="autoRefresh"
+        [class.text-indigo-700]="autoRefresh"
+        class="!rounded-lg !px-4 !h-10 font-bold transition-all duration-200"
+      >
+        <div class="flex items-center gap-2">
+          <div class="relative flex h-3 w-3">
+            <span
+              *ngIf="autoRefresh"
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-3 w-3"
+              [class.bg-indigo-500]="autoRefresh"
+              [class.bg-gray-400]="!autoRefresh"
+            ></span>
+          </div>
+          {{ autoRefresh ? 'Ao Vivo (30s)' : 'Pausado' }}
+        </div>
+      </button>
+
+      <button
+        mat-icon-button
+        (click)="forceRefresh()"
+        [disabled]="loading"
+        matTooltip="Atualizar agora mesmo"
+        class="!w-10 !h-10 p-2 text-gray-500 hover:text-indigo-600 hover:bg-gray-50 !rounded-lg transition-colors"
+      >
+        <mat-icon [class.animate-spin]="loading">refresh</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div
+      class="md:col-span-2 lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between relative overflow-hidden group"
+    >
+      <div
+        class="absolute right-0 top-0 w-32 h-32 bg-gradient-to-br from-gray-50 to-white rounded-bl-full -mr-10 -mt-10 opacity-50 transition-opacity group-hover:opacity-100"
+      ></div>
+
+      <div>
+        <h2
+          class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1"
+        >
+          Status Geral
+        </h2>
+        <div class="flex items-center gap-3">
+          <span
+            class="text-4xl font-black tracking-tight"
+            [class.text-green-600]="health?.ok"
+            [class.text-red-600]="health && !health.ok"
+            [class.text-gray-400]="!health"
+          >
+            {{ health ? (health.ok ? 'OPERACIONAL' : 'INSTÁVEL') :
+            'VERIFICANDO...' }}
+          </span>
+          <mat-icon
+            class="!w-8 !h-8 text-3xl"
+            [class.text-green-500]="health?.ok"
+            [class.text-red-500]="health && !health.ok"
+          >
+            {{ health?.ok ? 'check_circle' : 'warning' }}
+          </mat-icon>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center gap-2 text-sm text-gray-500">
+        <mat-icon class="!w-4 !h-4 text-sm">schedule</mat-icon>
+        Última verificação:
+        <span
+          class="font-mono font-medium text-gray-700 bg-gray-100 px-2 py-0.5 rounded"
+        >
+          {{ ready?.timestamp | date:'HH:mm:ss' }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between relative overflow-hidden"
+    >
+      <div>
+        <h2
+          class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2"
+        >
+          Latência API
+        </h2>
+        <div class="flex items-baseline gap-1">
+          <span class="text-4xl font-black text-gray-900">
+            {{ ready?.latency ?? '--' }}
+          </span>
+          <span class="text-lg font-bold text-gray-400">ms</span>
+        </div>
+      </div>
+
+      <div class="w-full bg-gray-100 h-2 rounded-full mt-4 overflow-hidden">
+        <div
+          class="h-full rounded-full transition-all duration-500 ease-out"
+          [style.width.%]="(ready?.latency || 0) / 10"
+          [ngClass]="{
+                  'bg-green-500': (ready?.latency ?? 0) < 200,
+                  'bg-yellow-500': (ready?.latency ?? 0) >= 200 && (ready?.latency ?? 0) < 500,
+                  'bg-red-500': (ready?.latency ?? 0) >= 500
+                }"
+        ></div>
+      </div>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-center items-center text-center relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-white opacity-0 hover:opacity-100 transition-opacity"
+      ></div>
+      <div class="relative z-10">
+        <div
+          class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-3 mx-auto"
+        >
+          <mat-icon>code</mat-icon>
+        </div>
+        <h3 class="font-bold text-gray-900">Versão {{ meta.version }}</h3>
+        <p class="text-xs text-gray-500 mt-1 font-mono">
+          {{ meta.apiBaseUrl }}
+        </p>
+      </div>
+    </div>
   </div>
 
-  <div class="grid gap-3 sm:grid-cols-3">
-    <mat-card class="p-3">
-      <div class="text-sm font-semibold">Liveness</div>
+  <h3 class="text-lg font-bold text-gray-900 mb-4 px-1">
+    Verificações Detalhadas
+  </h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div
+      class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between group hover:border-indigo-200 transition-colors"
+    >
+      <div class="flex items-center gap-4">
+        <div
+          class="w-10 h-10 rounded-full flex items-center justify-center"
+          [class.bg-green-100]="live.ok"
+          [class.text-green-600]="live.ok"
+          [class.bg-red-100]="!live.ok"
+          [class.text-red-600]="!live.ok"
+        >
+          <mat-icon>{{ live.ok ? 'dns' : 'dns_off' }}</mat-icon>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-900">Frontend Liveness</h4>
+          <p class="text-xs text-gray-500">
+            Aplicação acessível e renderizando
+          </p>
+        </div>
+      </div>
       <div
-        class="mt-2 text-lg font-extrabold"
+        class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide"
+        [class.bg-green-50]="live.ok"
         [class.text-green-700]="live.ok"
+        [class.bg-red-50]="!live.ok"
         [class.text-red-700]="!live.ok"
       >
-        {{ live.ok ? "OK" : "FAIL" }}
+        {{ live.ok ? 'Aprovado' : 'Falha' }}
       </div>
-      <div class="text-xs text-gray-600">{{ live.message }}</div>
-    </mat-card>
+    </div>
 
-    <mat-card class="p-3">
-      <div class="text-sm font-semibold">Readiness</div>
-      <div
-        class="mt-2 text-lg font-extrabold"
-        [class.text-green-700]="ready?.ok"
-        [class.text-orange-700]="ready && !ready.ok"
-      >
-        {{ ready ? (ready.ok ? "OK" : "FAIL") : "..." }}
-      </div>
-      <div class="text-xs text-gray-600">{{ ready?.message }}</div>
-    </mat-card>
-
-    <mat-card class="p-3">
-      <div class="text-sm font-semibold">Health</div>
-      <div
-        class="mt-2 text-lg font-extrabold"
-        [class.text-green-700]="health?.ok"
-        [class.text-red-700]="health && !health.ok"
-      >
-        {{ health ? (health.ok ? "OK" : "FAIL/WARN") : "..." }}
-      </div>
-      <div class="text-xs text-gray-600">{{ health?.message }}</div>
-    </mat-card>
-  </div>
-
-  <mat-card class="p-3">
-    <div class="text-sm font-semibold">Meta</div>
-    <pre class="mt-2 overflow-auto rounded-lg bg-gray-50 p-3 text-xs">
-{{
-      meta | json
-    }}</pre
+    <div
+      class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between group hover:border-indigo-200 transition-colors"
     >
-    <button mat-stroked-button (click)="run()">Reexecutar checks</button>
-  </mat-card>
+      <div class="flex items-center gap-4">
+        <div
+          class="w-10 h-10 rounded-full flex items-center justify-center"
+          [class.bg-green-100]="ready?.ok"
+          [class.text-green-600]="ready?.ok"
+          [class.bg-orange-100]="!ready?.ok"
+          [class.text-orange-600]="!ready?.ok"
+        >
+          <mat-icon>{{ ready?.ok ? 'cloud_queue' : 'cloud_off' }}</mat-icon>
+        </div>
+        <div>
+          <h4 class="font-bold text-gray-900">Backend Connection</h4>
+          <p class="text-xs text-gray-500">
+            {{ ready?.message || 'Aguardando verificação...' }}
+          </p>
+        </div>
+      </div>
+      <div
+        class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide"
+        [class.bg-green-50]="ready?.ok"
+        [class.text-green-700]="ready?.ok"
+        [class.bg-orange-50]="!ready?.ok"
+        [class.text-orange-700]="!ready?.ok"
+      >
+        {{ ready?.ok ? 'Conectado' : 'Indisponível' }}
+      </div>
+    </div>
+  </div>
 </div>

@@ -19,7 +19,6 @@ export class PetsFacade {
   private api = inject(PetsApiService);
   private snack = inject(SnackbarService);
 
-  // exposições
   readonly items$ = this.store.items$;
   readonly total$ = this.store.total$;
   readonly page$ = this.store.page$;
@@ -60,7 +59,6 @@ export class PetsFacade {
   }
 
   searchByName(name: string) {
-    // debounce 300ms + reset page=1
     this.store.patch({ query: name ?? '', page: 1 });
     return of(name).pipe(
       debounceTime(300),

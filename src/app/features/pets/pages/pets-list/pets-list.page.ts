@@ -35,18 +35,13 @@ export class PetsListPage implements OnInit, OnDestroy {
   facade = inject(PetsFacade);
   private destroy$ = new Subject<void>();
 
-  // FormControl para busca por nome
   searchControl = new FormControl("");
 
-  // Store usa paginação 1-based (page=1 é primeira página)
-  // Material Paginator usa 0-based (pageIndex=0 é primeira página)
-  // Logo, precisamos converter: pageIndex = page - 1
   pageIndex$ = this.facade.page$.pipe(map((page) => page - 1));
 
   ngOnInit() {
     this.facade.loadPets().subscribe();
 
-    // Conecta mudanças do input ao facade (com debounce 300ms já implementado no facade)
     this.searchControl.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((query) => {

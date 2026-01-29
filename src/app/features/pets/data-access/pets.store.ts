@@ -7,7 +7,6 @@ export class PetsStore {
   private readonly _state$ = new BehaviorSubject<PetsState>(initialPetsState);
   readonly state$ = this._state$.asObservable();
 
-  // seletores
   readonly items$ = this.state$.pipe(
     map((s) => s.items),
     distinctUntilChanged()

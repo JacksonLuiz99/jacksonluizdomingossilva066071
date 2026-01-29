@@ -70,7 +70,6 @@ export class PetFormPage {
         if (pet?.id) {
           this.router.navigateByUrl(`/pets/${pet.id}`);
         } else {
-          // Se a criação falhou, voltar para a lista de pets
           this.router.navigateByUrl('/pets');
         }
       });

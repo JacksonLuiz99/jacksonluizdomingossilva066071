@@ -40,7 +40,7 @@ describe('PetsFacade', () => {
     api.list.and.returnValue(
       of({
         items: [
-          { id: 1, nome: 'Luna', especie: 'Gato', idade: 2, raca: 'SRD' },
+          { id: 1, nome: 'Luna', idade: 2, raca: 'SRD' },
         ],
         total: 1,
         page: 1,
@@ -70,7 +70,6 @@ describe('PetsFacade', () => {
     const newPet = {
       id: 99,
       nome: 'Bob',
-      especie: 'Cachorro',
       idade: 3,
       raca: 'Labrador',
     };

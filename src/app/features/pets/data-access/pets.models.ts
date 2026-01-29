@@ -1,4 +1,3 @@
-// Interface que representa o anexo/foto retornado pela API
 export interface AnexoResponseDto {
   id: number;
   nome: string;

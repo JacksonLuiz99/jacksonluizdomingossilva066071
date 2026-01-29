@@ -5,17 +5,11 @@ export interface PageResult<T> {
   size: number;
 }
 
-// Tenta mapear formatos comuns vindos do Swagger.
-// Ajuste se sua API usar outro shape.
 export function mapToPageResult<T>(
   raw: any,
   page: number,
-  size: number
+  size: number,
 ): PageResult<T> {
-  // exemplos:
-  // { items, total, page, size }
-  // { content, totalElements, number, size }
-  // { data, total, page, size }
   const items = raw?.items ?? raw?.content ?? raw?.data ?? raw?.results ?? [];
 
   const total =
@@ -25,7 +19,7 @@ export function mapToPageResult<T>(
     (Array.isArray(items) ? items.length : 0);
 
   const p =
-    raw?.page ?? (typeof raw?.number === "number" ? raw.number + 1 : page);
+    raw?.page ?? (typeof raw?.number === 'number' ? raw.number + 1 : page);
 
   const s = raw?.size ?? size;
 

@@ -19,7 +19,6 @@ export class CepService {
   private readonly baseUrl = "https://brasilapi.com.br/api/cep/v2";
 
   consultarCep(cep: string): Observable<EnderecoViaCep> {
-    // Remove caracteres não numéricos apenas por segurança
     const cleanCep = cep.replace(/\D/g, "");
     return this.http.get<EnderecoViaCep>(`${this.baseUrl}/${cleanCep}`);
   }

@@ -11,7 +11,6 @@ export class PetsApiService {
   private config = inject(AppConfigService);
 
   list(page: number, size: number, query: string) {
-    // API está usando paginação baseada em 0, mas o frontend usa baseado em 1
     const apiPage = page - 1; // Converter para 0-indexed para a API
     let params = new HttpParams()
       .set('page', String(apiPage))

@@ -31,17 +31,13 @@
     </div>
   </div>
 
-  <!-- Loading -->
   @if (facade.loadingDetail$ | async) {
   <div class="h-1.5 w-full bg-orange-100 rounded-full overflow-hidden mb-6">
     <div
       class="h-full bg-orange-500 animate-[loading_1.5s_ease-in-out_infinite] w-1/2 rounded-full"
     ></div>
   </div>
-  }
-
-  <!-- Pet Details -->
-  @if (facade.selectedPet$ | async; as pet) {
+  } @if (facade.selectedPet$ | async; as pet) {
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div class="flex flex-col gap-6">
@@ -101,7 +97,6 @@
         </div>
       </div>
 
-      <!-- Upload Photo Section -->
       <app-photo-upload
         title="Atualizar foto do pet"
         [uploading]="(facade.uploadingPhoto$ | async) ?? false"
@@ -173,7 +168,6 @@
     </div>
   </div>
 
-  <!-- Error Message -->
   @if (facade.error$ | async; as err) {
   <div
     class="flex items-center gap-3 p-6 bg-red-50 border-l-4 border-red-600 rounded-xl text-red-600 font-medium mt-6"

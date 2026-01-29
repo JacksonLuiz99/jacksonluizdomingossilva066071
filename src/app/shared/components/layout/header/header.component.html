@@ -8,7 +8,6 @@
   [class.bg-transparent]="!isScrolled"
 >
   <div class="container mx-auto px-4 flex items-center justify-between">
-    <!-- Logo -->
     <div
       class="flex items-center gap-2 group cursor-pointer"
       routerLink="/pets"
@@ -26,7 +25,6 @@
       </h1>
     </div>
 
-    <!-- Navigation -->
     <nav
       class="hidden md:flex items-center gap-1 bg-white/50 backdrop-blur-sm px-6 py-2 rounded-full shadow-sm border border-white/20"
     >
@@ -76,7 +74,6 @@
       </svg>
     </button>
 
-    <!-- Hamburger Button -->
     <button
       class="md:hidden p-2 text-gray-600 focus:outline-none"
       (click)="toggleMobileMenu()"

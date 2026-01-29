@@ -95,7 +95,6 @@ export class TutoresListPage {
 
     dialogRef.afterClosed().subscribe((confirmed) => {
       if (confirmed) {
-        // TODO: Implementar exclusão quando API estiver pronta
         console.log('Excluir tutor:', tutor.id);
       }
     });
