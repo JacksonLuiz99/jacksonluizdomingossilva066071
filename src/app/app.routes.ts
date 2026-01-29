@@ -29,7 +29,11 @@ export const routes: Routes = [
 
   {
     path: 'health-checks',
-    redirectTo: 'pets',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/health-check/health.routes').then(
+        (m) => m.HEALTH_ROUTES,
+      ),
   },
   {
     path: 'contato',

@@ -1,0 +1,56 @@
+<div class="grid gap-4">
+  <div>
+    <h1 class="text-2xl font-extrabold">Health</h1>
+    <p class="text-sm text-gray-600">
+      Liveness / Readiness / Health + versão e build.
+    </p>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-3">
+    <mat-card class="p-3">
+      <div class="text-sm font-semibold">Liveness</div>
+      <div
+        class="mt-2 text-lg font-extrabold"
+        [class.text-green-700]="live.ok"
+        [class.text-red-700]="!live.ok"
+      >
+        {{ live.ok ? "OK" : "FAIL" }}
+      </div>
+      <div class="text-xs text-gray-600">{{ live.message }}</div>
+    </mat-card>
+
+    <mat-card class="p-3">
+      <div class="text-sm font-semibold">Readiness</div>
+      <div
+        class="mt-2 text-lg font-extrabold"
+        [class.text-green-700]="ready?.ok"
+        [class.text-orange-700]="ready && !ready.ok"
+      >
+        {{ ready ? (ready.ok ? "OK" : "FAIL") : "..." }}
+      </div>
+      <div class="text-xs text-gray-600">{{ ready?.message }}</div>
+    </mat-card>
+
+    <mat-card class="p-3">
+      <div class="text-sm font-semibold">Health</div>
+      <div
+        class="mt-2 text-lg font-extrabold"
+        [class.text-green-700]="health?.ok"
+        [class.text-red-700]="health && !health.ok"
+      >
+        {{ health ? (health.ok ? "OK" : "FAIL/WARN") : "..." }}
+      </div>
+      <div class="text-xs text-gray-600">{{ health?.message }}</div>
+    </mat-card>
+  </div>
+
+  <mat-card class="p-3">
+    <div class="text-sm font-semibold">Meta</div>
+    <pre class="mt-2 overflow-auto rounded-lg bg-gray-50 p-3 text-xs">
+{{
+      meta | json
+    }}</pre
+    >
+    <button mat-stroked-button (click)="run()">Reexecutar checks</button>
+  </mat-card>
+</div>
