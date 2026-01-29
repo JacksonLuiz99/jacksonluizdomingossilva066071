@@ -17,7 +17,7 @@ import { TutoresFacade } from '../../data-access/tutores.facade';
 import { PetsFacade } from '../../../pets/data-access/pets.facade';
 import { Pet } from '../../../pets/data-access/pets.models';
 import { PhotoUploadComponent } from '../../../../shared/components/photo-upload/photo-upload.component';
-import { ConfirmDialogComponent } from '../../../../core/ui/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/ui/confirm-dialog/confirm-dialog.component';
 import { map, startWith } from 'rxjs';
 
 import {
@@ -98,7 +98,7 @@ export class TutorDetailPage {
   }
 
   remover(tutorId: number, petId: number, petNome: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Remover Vínculo',
         message: `Tem certeza que deseja remover o vínculo com "${petNome}"? O pet não será excluído, apenas o vínculo com este tutor.`,
@@ -108,8 +108,8 @@ export class TutorDetailPage {
       },
     });
 
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
+    ref.afterClosed().subscribe((ok) => {
+      if (ok) {
         this.facade
           .removerVinculo(tutorId, petId)
           .subscribe(() => this.facade.loadTutorDetail(tutorId).subscribe());
@@ -121,7 +121,7 @@ export class TutorDetailPage {
     // Remove caracteres não numéricos
     const cleanPhone = phone.replace(/\D/g, '');
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Ligar para Tutor',
         message: `Deseja ligar para o número ${phone}?`,
@@ -131,15 +131,15 @@ export class TutorDetailPage {
       },
     });
 
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
+    ref.afterClosed().subscribe((ok) => {
+      if (ok) {
         window.open(`tel:${cleanPhone}`, '_self');
       }
     });
   }
 
   confirmEmail(email: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Enviar Email',
         message: `Deseja enviar um email para ${email}?`,
@@ -149,8 +149,8 @@ export class TutorDetailPage {
       },
     });
 
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
+    ref.afterClosed().subscribe((ok) => {
+      if (ok) {
         window.open(`mailto:${email}`, '_self');
       }
     });
@@ -173,6 +173,7 @@ export class TutorDetailPage {
         isDanger: true,
       },
     });
+
     ref.afterClosed().subscribe((ok) => {
       if (ok) {
         this.facade
@@ -183,7 +184,7 @@ export class TutorDetailPage {
   }
 
   deleteTutorPhoto(tutorId: number, photoId: number) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Excluir Foto',
         message: 'Tem certeza que deseja excluir a foto deste tutor?',
@@ -193,8 +194,8 @@ export class TutorDetailPage {
       },
     });
 
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
+    ref.afterClosed().subscribe((ok) => {
+      if (ok) {
         this.facade
           .deleteTutorPhoto(tutorId, photoId)
           .subscribe(() => this.facade.loadTutorDetail(tutorId).subscribe());

@@ -193,7 +193,7 @@
         >
           @for (pet of tutor.pets; track pet.id) {
           <div
-            class="pet-card flex items-center gap-4 p-3 rounded-xl border border-gray-100 hover:bg-orange-50/50 hover:border-orange-200 transition-all duration-200 group relative"
+            class="pet-card flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:bg-orange-50/50 hover:border-orange-200 transition-all duration-200 group relative"
           >
             <a
               [routerLink]="['/pets', pet.id]"
@@ -202,15 +202,15 @@
               <img
                 [src]="pet.foto?.url || '/assets/images/placeholder-pet.png'"
                 [alt]="pet.nome"
-                class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white"
+                class="w-14 h-14 rounded-full object-cover shadow-md border-2 border-white"
               />
               <div class="flex-1 min-w-0">
                 <h3
-                  class="text-sm font-bold text-gray-800 truncate group-hover:text-orange-600 transition-colors"
+                  class="text-base font-bold text-gray-800 truncate group-hover:text-orange-600 transition-colors"
                 >
                   {{ pet.nome | titlecase }}
                 </h3>
-                <p class="text-gray-400 text-xs truncate">
+                <p class="text-gray-500 text-sm truncate">
                   {{ pet.raca | titlecase }} • {{ pet.idade }} anos
                 </p>
               </div>
@@ -222,10 +222,10 @@
             <button
               type="button"
               (click)="remover(tutor.id, pet.id, pet.nome); $event.stopPropagation()"
-              class="w-8 h-8 bg-white text-red-400 rounded-full border border-red-100 flex items-center justify-center opacity-0 transition-all cursor-pointer group-hover:opacity-100 hover:bg-red-50 hover:text-red-500 hover:border-red-200"
+              class="w-10 h-10 bg-white text-red-500 rounded-full border border-red-200 flex items-center justify-center shadow-sm cursor-pointer hover:bg-red-50 hover:scale-110 transition-all z-10"
               title="Remover vínculo"
             >
-              <mat-icon class="!text-base !w-4 !h-4">close</mat-icon>
+              <mat-icon class="!text-xl !w-5 !h-5">delete_forever</mat-icon>
             </button>
           </div>
           }

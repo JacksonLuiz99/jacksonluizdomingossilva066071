@@ -12,7 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { TutoresApiService } from '../../data-access/tutores-api.service';
-import { ConfirmDialogComponent } from '../../../../core/ui/confirm-dialog/confirm-dialog.component';
+import { TutoresFacade } from '../../data-access/tutores.facade';
+import { ConfirmDialogComponent } from '../../../../shared/components/ui/confirm-dialog/confirm-dialog.component';
 
 @Component({
   standalone: true,
@@ -32,6 +33,7 @@ import { ConfirmDialogComponent } from '../../../../core/ui/confirm-dialog/confi
 })
 export class TutoresListPage {
   private api = inject(TutoresApiService);
+  private facade = inject(TutoresFacade);
   private dialog = inject(MatDialog);
 
   tutores: any[] = [];
@@ -83,7 +85,7 @@ export class TutoresListPage {
     event.preventDefault();
     event.stopPropagation();
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Excluir Tutor',
         message: `Tem certeza que deseja excluir o tutor "${tutor.nome}"? Esta ação não pode ser desfeita.`,
@@ -93,9 +95,11 @@ export class TutoresListPage {
       },
     });
 
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        console.log('Excluir tutor:', tutor.id);
+    ref.afterClosed().subscribe((ok) => {
+      if (ok) {
+        this.facade.deleteTutor(tutor.id).subscribe(() => {
+          this.loadTutores();
+        });
       }
     });
   }
