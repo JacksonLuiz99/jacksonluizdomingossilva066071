@@ -22,7 +22,7 @@ import { HealthService, CheckResult } from '../health.service';
   ],
   templateUrl: './health.page.html',
 })
-export class HealthPage implements OnDestroy {
+export class HealthPage implements OnInit, OnDestroy {
   private service = inject(HealthService);
 
   live: CheckResult = this.service.liveness();
@@ -38,7 +38,8 @@ export class HealthPage implements OnDestroy {
 
   ngOnInit() {
     // Timer roda a cada 30 segundos se autoRefresh for true
-    timer(0, 30000)
+    // Delay inicial de 2s para esperar o token estar disponível
+    timer(2000, 30000)
       .pipe(
         takeUntil(this.destroy$),
         filter(() => this.autoRefresh),
