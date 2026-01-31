@@ -11,7 +11,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       const msg =
         err?.error?.message ||
         err?.message ||
-        'Erro inesperado ao comunicar com a API.'; // evita spammar em endpoints de listagem com erro repetido?
+        'Erro inesperado ao comunicar com a API.';
       snack.error(msg);
       return throwError(() => err);
     }),
