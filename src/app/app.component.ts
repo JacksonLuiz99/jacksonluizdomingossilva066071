@@ -13,9 +13,7 @@ import { HeaderComponent } from './shared/components/layout/header/header.compon
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
+  title = 'jacksonluizdomingossilva066071';
   auth = inject(AuthFacade);
   private router = inject(Router);
   private config = inject(AppConfigService);
