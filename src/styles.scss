@@ -49,7 +49,6 @@ select,
     pointer !important;
 }
 
-/* Garantir que elementos filhos de cards e botões herdem o cursor */
 .pet-card *,
 .btn-add-pet *,
 .back-button *,
@@ -61,13 +60,10 @@ button > span {
   cursor: inherit !important;
 }
 
-/* SCSS (somente quando Tailwind não cobre bem):
-   pequenos ajustes para Material em telas muito pequenas */
 .mat-mdc-dialog-container {
   max-width: 96vw;
 }
 
-// Snackbar Colors
 .snackbar-success {
   .mdc-snackbar__surface {
     background-color: #10b981 !important;
@@ -96,4 +92,8 @@ button > span {
   .mat-mdc-button {
     color: white !important;
   }
+}
+
+.mat-mdc-paginator-range-actions .mat-mdc-icon-button {
+  margin: 0 4px !important;
 }
