@@ -23,6 +23,7 @@ export class AppComponent {
   }
 
   get isLoggedIn(): boolean {
-    return !window.location.pathname.includes('/login');
+    const path = window.location.pathname;
+    return !path.includes('/login') && !path.includes('/sign-out');
   }
 }

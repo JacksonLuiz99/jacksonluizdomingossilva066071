@@ -1,0 +1,88 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-gradient-to-b from-sky-300 via-teal-200 to-green-200 relative overflow-hidden"
+>
+  <div
+    class="absolute top-10 left-10 w-32 h-16 bg-white/60 rounded-full blur-xl"
+  ></div>
+  <div
+    class="absolute top-20 right-20 w-40 h-20 bg-white/50 rounded-full blur-xl"
+  ></div>
+  <div
+    class="absolute bottom-32 left-1/4 w-48 h-24 bg-white/40 rounded-full blur-2xl"
+  ></div>
+
+  <div
+    class="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full mx-4 text-center relative overflow-hidden transform animate-fade-in"
+  >
+    <div
+      class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-400"
+    ></div>
+
+    <div class="mb-6">
+      <div
+        class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full shadow-lg animate-bounce-slow"
+      >
+        <span class="text-5xl">🐾</span>
+      </div>
+    </div>
+
+    <h1
+      class="text-3xl font-extrabold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent mb-3"
+    >
+      Até logo!
+    </h1>
+
+    <p class="text-gray-600 mb-6">
+      Obrigado por usar o
+      <span class="font-bold text-gray-800">Pet</span
+      ><span class="font-bold text-orange-500">Friends</span>!
+      <br />
+      <span class="text-sm text-gray-500"
+        >Esperamos te ver novamente em breve. 🐶❤️</span
+      >
+    </p>
+
+    <div
+      class="mb-8 py-4 px-6 bg-gray-50 rounded-2xl border border-gray-100 inline-block"
+    >
+      <p class="text-gray-500 text-sm mb-1">Redirecionando em</p>
+      <div class="flex items-center justify-center gap-2">
+        <span
+          class="text-4xl font-black text-orange-500 tabular-nums transition-all duration-300"
+        >
+          {{ countdown }}
+        </span>
+        <span class="text-gray-400 text-lg"
+          >{{ countdown === 1 ? "segundo" : "segundos" }}</span
+        >
+      </div>
+    </div>
+
+    <div>
+      <button
+        (click)="goToLogin()"
+        class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-orange-500 to-orange-400 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 group"
+      >
+        <span>Ir para login</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2.5"
+          stroke="currentColor"
+          class="w-5 h-5 group-hover:translate-x-1 transition-transform"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <p class="text-xs text-gray-400 mt-8">
+      Sua sessão foi encerrada com segurança
+    </p>
+  </div>
+</div>

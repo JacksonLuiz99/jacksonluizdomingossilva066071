@@ -12,6 +12,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./core/auth/login/login.page').then((m) => m.LoginPage),
   },
+  {
+    path: 'sign-out',
+    loadComponent: () =>
+      import('./core/auth/sign-out/sign-out.page').then((m) => m.SignOutPage),
+  },
 
   {
     path: 'pets',
