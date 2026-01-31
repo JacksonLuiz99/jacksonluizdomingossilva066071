@@ -1,59 +1,278 @@
-# Jacksonluizdomingossilva066071
+# 🐾 Pet Friends
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+> Sistema de gerenciamento de pets e tutores desenvolvido com Angular 19
 
-## Development server
+[![Angular](https://img.shields.io/badge/Angular-19-DD0031?style=flat&logo=angular)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat&logo=tailwindcss)](https://tailwindcss.com/)
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## 📋 Dados do Candidato
+
+| Campo         | Valor                             |
+| ------------- | --------------------------------- |
+| **Nome**      | Jackson Luiz Domingos Silva       |
+| **Inscrição** | 16380                             |
+| **Vaga**      | Engenheiro da Computação - Sênior |
+
+---
+
+## 🏗️ Arquitetura do Projeto
+
+### Padrão Facade + Store (State Management)
+
+O projeto utiliza uma arquitetura baseada em **Facade** para abstrair a complexidade do gerenciamento de estado e chamadas de API.
+
+```mermaid
+graph LR
+    Component[Componente] -->|Chama Método| Facade[Facade]
+    Facade -->|Requisição HTTP| API[API Service]
+    Facade -->|Atualiza Estado| Store[Store (State)]
+    API -->|Retorna Dados| Facade
+    Store -->|Emite Dados (Observable)| Facade
+    Facade -->|Observable de Dados| Component
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1.  **Component**: Apenas exibe dados e captura ações do usuário.
+2.  **Facade**: Centraliza a lógica, chamando APIs e gerenciando o estado.
+3.  **Store**: Mantém o estado da aplicação reativo (BehaviorSubject).
+4.  **API**: Responsável apenas pelas requisições HTTP.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+src/app/
+├── core/                          # Serviços singleton e funcionalidades core
+│   ├── auth/                      # Autenticação
+│   │   ├── login/                 # Página de login
+│   │   ├── sign-out/              # Página de logout
+│   │   ├── auth.facade.ts         # Facade de autenticação
+│   │   ├── auth.store.ts          # Estado de autenticação
+│   │   ├── auth-api.service.ts    # Chamadas HTTP de auth
+│   │   ├── auth-refresh.service.ts# Renovação de token
+│   │   └── token-storage.service.ts
+│   ├── config/                    # Configurações da aplicação
+│   │   └── app-config.service.ts  # Serviço de configuração
+│   ├── guards/                    # Route guards
+│   │   └── auth.guard.ts          # Guard de autenticação
+│   ├── i18n/                      # Internacionalização
+│   │   └── pt-br-paginator-intl.ts# Tradução do paginador
+│   ├── interceptors/              # HTTP interceptors
+│   │   ├── auth.interceptor.ts    # Injeção de token
+│   │   └── error.interceptor.ts   # Tratamento de erros
+│   └── ui/                        # Serviços de UI
+│       ├── confirm-dialog/        # Diálogo de confirmação
+│       └── snackbar.service.ts    # Notificações
+│
+├── features/                      # Módulos de funcionalidades (lazy loaded)
+│   ├── contacts/                  # Página de contato
+│   │   ├── pages/
+│   │   │   └── contact/
+│   │   │       ├── contact.page.html
+│   │   │       └── contact.page.ts
+│   │   └── contacts.routes.ts
+│   ├── health-check/              # Liveness e Readiness checks
+│   │   ├── health-check/
+│   │   │   ├── health.page.html
+│   │   │   └── health.page.ts
+│   │   ├── health.routes.ts
+│   │   └── health.service.ts
+│   ├── pets/                      # Gestão de pets
+│   │   ├── data-access/
+│   │   │   ├── pets-api.service.ts
+│   │   │   ├── pets.facade.ts
+│   │   │   ├── pets.models.ts
+│   │   │   └── pets.store.ts
+│   │   ├── pages/
+│   │   │   ├── pet-detail/
+│   │   │   ├── pet-form/
+│   │   │   └── pets-list/
+│   │   └── pets.routes.ts
+│   └── tutores/                   # Gestão de tutores
+│       ├── data-access/
+│       │   ├── tutores-api.service.ts
+│       │   ├── tutores.facade.ts
+│       │   ├── tutores.models.ts
+│       │   └── tutores.store.ts
+│       ├── pages/
+│       │   ├── tutor-detail/
+│       │   ├── tutor-form/
+│       │   └── tutores-list/
+│       └── tutores.routes.ts
+│
+└── shared/                        # Componentes compartilhados
+    └── components/
+        ├── address-actions-sheet/ # Ações de endereço
+        ├── layout/                # Header
+        ├── photo-upload/          # Upload de fotos
+        ├── services/              # Serviços CEP
+        ├── ui/                    # ConfirmDialog, etc.
+        └── utils/                 # Utilitários
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Padrões Utilizados
+
+- **Facade Pattern**: Abstração da lógica de negócio
+- **Store Pattern**: Gerenciamento de estado com BehaviorSubject
+- **Lazy Loading**: Carregamento sob demanda das rotas
+- **Standalone Components**: Componentes independentes (Angular 19)
+
+  ***
+
+## 🌟 Diferenciais (Extras Implementados)
+
+Além dos requisitos solicitados, foram implementadas as seguintes funcionalidades para enriquecer o projeto:
+
+- **♿ Acessibilidade (VLibras)**: Integração com widget governamental para tradução automática de conteúdo para Libras.
+- **🚪 Página de Sign-Out**: Redirecionamento amigável com contagem regressiva ao sair do sistema.
+- **☁️ Docker**: Suporte completo a containerização com multi-stage build e Nginx otimizado.
+- **❤️ Health Checks**: Endpoints visuais de Liveness e Readiness para monitoramento do sistema.
+- **🐭 Cursores Personalizados**: Ícones temáticos de patinha para experiência imersiva.
+- **📱 Design Responsivo**: Interface adaptada para mobile e desktop com menu hambúrguer.
+
+---
+
+## 🚀 Como Executar
+
+### Pré-requisitos
+
+- Node.js 20+
+- npm 10+
+
+### Instalação
 
 ```bash
-ng generate --help
+# Clonar repositório
+git clone https://github.com/JacksonLuiz99/jacksonluizdomingossilva066071.git
+cd jacksonluizdomingossilva066071
+
+# Instalar dependências
+npm install
+
+# Iniciar servidor de desenvolvimento
+npm start
 ```
 
-## Building
+Acesse: `http://localhost:4200`
 
-To build the project run:
+### Credenciais de Teste
+
+| Campo  | Valor          |
+| ------ | -------------- |
+| E-mail | jackson@db.com |
+| Senha  | 123456         |
+
+---
+
+## 🧪 Testes
 
 ```bash
-ng build
+# Executar testes unitários
+npm test
+
+# Executar testes com coverage
+npm run test:coverage
+
+# Executar testes em modo headless (CI/CD)
+ng test --no-watch --browsers=ChromeHeadless
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+**Status:** 18 testes passando ✅
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🐳 Docker
 
 ```bash
-ng test
+# Build da imagem
+docker build -t petfriends .
+
+# Executar container
+docker run -p 8080:80 petfriends
 ```
 
-## Running end-to-end tests
+Acesse: `http://localhost:8080`
 
-For end-to-end (e2e) testing, run:
+---
+
+## 📦 Build de Produção
 
 ```bash
-ng e2e
+# Build otimizado
+npm run build
+
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🌐 Deploy
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### GitHub Pages
+
+```bash
+npm run deploy
+```
+
+**URL:** https://jacksonluiz99.github.io/jacksonluizdomingossilva066071/login
+
+---
+
+## ✨ Funcionalidades
+
+### Pets
+
+- ✅ Listagem com paginação (10 itens/página)
+- ✅ Busca por nome
+- ✅ Cadastro, edição e exclusão
+- ✅ Upload e remoção de fotos
+
+### Tutores
+
+- ✅ Listagem com paginação
+- ✅ Cadastro com busca de CEP automática
+- ✅ Vinculação/desvinculação de pets
+- ✅ Upload de fotos
+
+### Autenticação
+
+- ✅ Login com JWT
+- ✅ Refresh token automático
+- ✅ Proteção de rotas
+- ✅ Página de sign-out com countdown
+
+### Acessibilidade
+
+- ✅ Widget VLibras (tradução para Libras)
+- ✅ Contraste adequado
+- ✅ Navegação por teclado
+
+### Health Checks
+
+- ✅ Liveness check (aplicação rodando)
+- ✅ Readiness check (API disponível)
+
+---
+
+## 🛠️ Tecnologias
+
+| Categoria               | Tecnologia           |
+| ----------------------- | -------------------- |
+| Framework               | Angular 19           |
+| Linguagem               | TypeScript 5.x       |
+| Estilos                 | Tailwind CSS 3.4     |
+| UI Components           | Angular Material     |
+| HTTP Client             | Angular HttpClient   |
+| Gerenciamento de Estado | BehaviorSubject/RxJS |
+| Testes                  | Jasmine + Karma      |
+| Containerização         | Docker + Nginx       |
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido como parte de um processo seletivo.
+
+---
+
+<div align="center">
+  <p>Desenvolvido com 🧡 por <strong>Jackson Luiz</strong></p>
+</div>
