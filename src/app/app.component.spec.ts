@@ -1,10 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { AuthFacade } from './core/auth/auth.facade';
+import { AppConfigService } from './core/config/app-config.service';
 
 describe('AppComponent', () => {
+  const authFacadeMock = {
+    isAuthenticated$: { subscribe: () => {} },
+    logout: () => {},
+  };
+
+  const configMock = {
+    config: { APP_VERSION: '1.0.0', BUILD_TIME: '2024-01-01' },
+    apiBaseUrl: 'http://test.com',
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        { provide: AuthFacade, useValue: authFacadeMock },
+        { provide: AppConfigService, useValue: configMock },
+      ],
     }).compileComponents();
   });
 
@@ -20,10 +40,9 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('jacksonluizdomingossilva066071');
   });
 
-  it('should render title', () => {
+  it('should have appVersion getter', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, jacksonluizdomingossilva066071');
+    const app = fixture.componentInstance;
+    expect(app.appVersion).toBe('1.0.0');
   });
 });
