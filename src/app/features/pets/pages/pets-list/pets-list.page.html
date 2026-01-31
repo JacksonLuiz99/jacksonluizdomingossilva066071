@@ -124,10 +124,9 @@
     }
   </div>
 
-  <!-- Material Paginator -->
   @if ((facade.total$ | async)! > 0) {
   <div
-    class="flex justify-center w-full   bg-white rounded-2xl overflow-hidden shadow-md"
+    class="paginator-container bg-white rounded-2xl overflow-hidden shadow-md"
   >
     <mat-paginator
       [length]="(facade.total$ | async)!"

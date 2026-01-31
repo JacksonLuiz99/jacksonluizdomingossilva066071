@@ -29,6 +29,7 @@ export class ContactPage {
     { name: 'Bootstrap' },
     { name: 'Git • GitLab • GitHub' },
     { name: 'Vue' },
+    { name: 'Figma'}
   ];
 
   socialLinks = [
