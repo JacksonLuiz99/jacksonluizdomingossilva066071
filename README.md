@@ -26,11 +26,11 @@ O projeto utiliza uma arquitetura baseada em **Facade** para abstrair a complexi
 
 ```mermaid
 graph LR
-    Component[Componente] -->|Chama Método| Facade[Facade]
-    Facade -->|Requisição HTTP| API[API Service]
-    Facade -->|Atualiza Estado| Store[Store (State)]
+    Component["Componente"] -->|Chama Método| Facade["Facade"]
+    Facade -->|Requisição HTTP| API["API Service"]
+    Facade -->|Atualiza Estado| Store["Store State"]
     API -->|Retorna Dados| Facade
-    Store -->|Emite Dados (Observable)| Facade
+    Store -->|Emite Dados Observable| Facade
     Facade -->|Observable de Dados| Component
 ```
 
