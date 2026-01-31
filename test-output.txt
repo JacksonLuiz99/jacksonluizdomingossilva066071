@@ -1,0 +1,17 @@
+﻿[91m31 01 2026 13:44:52.208:ERROR [config]: [39mError in config file!
+  Error: Cannot find module 'C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\karma.conf.js'
+Require stack:
+- C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\lib\config.js
+- C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\lib\server.js
+- C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\lib\cli.js
+- C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\bin\karma
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1249:15)
+    at Function._load (node:internal/modules/cjs/loader:1075:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)
+    at Module.require (node:internal/modules/cjs/loader:1340:12)
+    at require (node:internal/modules/helpers:138:16)
+    at Object.parseConfig (C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\lib\config.js:434:22)
+    at exports.run (C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\lib\cli.js:288:26)
+    at Object.<anonymous> (C:\Users\jacks\OneDrive\Documentos\projects angular\jacksonluizdomingossilva066071\node_modules\karma\bin\karma:3:23)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
