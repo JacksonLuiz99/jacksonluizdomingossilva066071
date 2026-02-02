@@ -1,6 +1,6 @@
 # 🐾 Pet Friends
 
-> Sistema de gerenciamento de pets e tutores desenvolvido com Angular 19
+> Sistema de relacionamento entre pets e tutores desenvolvido com Angular 19
 
 [![Angular](https://img.shields.io/badge/Angular-19-DD0031?style=flat&logo=angular)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
@@ -122,12 +122,18 @@ src/app/
 
 Além dos requisitos solicitados, foram implementadas as seguintes funcionalidades para enriquecer o projeto:
 
-- **♿ Acessibilidade (VLibras)**: Integração com widget governamental para tradução automática de conteúdo para Libras.
-- **🚪 Página de Sign-Out**: Redirecionamento amigável com contagem regressiva ao sair do sistema.
-- **☁️ Docker**: Suporte completo a containerização com multi-stage build e Nginx otimizado.
-- **❤️ Health Checks**: Endpoints visuais de Liveness e Readiness para monitoramento do sistema.
 - **🐭 Cursores Personalizados**: Ícones temáticos de patinha para experiência imersiva.
 - **📱 Design Responsivo**: Interface adaptada para mobile e desktop com menu hambúrguer.
+- **☁️ Docker**: Suporte completo a containerização com multi-stage build e Nginx otimizado.
+- **❤️ Health Checks**: Endpoints visuais de Liveness e Readiness para monitoramento do sistema.
+- **🚪 Página de Sign-Out**: Redirecionamento amigável com contagem regressiva ao sair do sistema.
+- **♿ Acessibilidade (VLibras)**: Integração com widget governamental para tradução automática de conteúdo para Libras.
+- **📮 Busca por CEP (BrasilAPI)**: ao digitar o CEP no cadastro de tutor, o sistema consulta a API pública e pré-preenche os dados do endereço.
+- **🧭 Ações inteligentes no tutor (endereço/telefone/e-mail)**:
+  - **Endereço**: abre opções de navegação (Waze/Google Maps) e **chamada de corrida (Uber)**.
+  - **Telefone**: clique para ligar (`tel:`).
+  - **E-mail**: clique para escrever (`mailto:`).
+
 
 ---
 
@@ -223,13 +229,16 @@ npm run deploy
 - ✅ Listagem com paginação (10 itens/página)
 - ✅ Busca por nome
 - ✅ Cadastro, edição e exclusão
+- ✅ Vizualização de tutores vinculados ao pet
 - ✅ Upload e remoção de fotos
 
 ### Tutores
 
-- ✅ Listagem com paginação
-- ✅ Cadastro com busca de CEP automática
+- ✅ Listagem com paginação (10 itens/página)
+- ✅ Busca por nome
+- ✅ Cadastro com busca de CEP automática, edição e exclusão
 - ✅ Vinculação/desvinculação de pets
+- ✅ Vizualização de pets vinculados ao tutor
 - ✅ Upload de fotos
 
 ### Autenticação
@@ -244,6 +253,7 @@ npm run deploy
 - ✅ Widget VLibras (tradução para Libras)
 - ✅ Contraste adequado
 - ✅ Navegação por teclado
+- ✅ Autocomplete
 
 ### Health Checks
 
@@ -274,5 +284,5 @@ Este projeto foi desenvolvido como parte de um processo seletivo.
 ---
 
 <div align="center">
-  <p>Desenvolvido com 🧡 por <strong>Jackson Luiz</strong></p>
+  <p>Desenvolvido com 🧡 por <strong>Jackson Luiz Domingos Silva</strong></p>
 </div>
