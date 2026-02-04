@@ -212,6 +212,19 @@ npm run build
 
 ## 🌐 Deploy
 
+### Vercel 
+
+**URL:** https://jacksonluizdomingossilva066071.vercel.app
+
+> Deploy automático integrado ao GitHub (a cada push na branch principal).
+
+Rotas úteis:
+- Login: /login
+- Pets: /pets
+- Tutores: /tutores
+- Health: /health
+
+
 ### GitHub Pages
 
 ```bash
