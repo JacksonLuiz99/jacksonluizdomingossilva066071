@@ -225,15 +225,6 @@ Rotas úteis:
 - Health: /health
 
 
-### GitHub Pages
-
-```bash
-npm run deploy
-```
-
-**URL:** https://jacksonluiz99.github.io/jacksonluizdomingossilva066071/login
-
----
 
 ## ✨ Funcionalidades
 
